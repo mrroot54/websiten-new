@@ -154,16 +154,16 @@ header {
   padding: 10px 15px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
+  font-size: 10px;
   color: #333;
   display: inline-block;
 }
 .email-icon {
-  color: #e74c3c;
+  color: rgb(244, 99, 99);
   margin-right: 6px;
 }
 .highlight-name {
-  background-color: #fff3cd;
+  background-color: #cdf14b;
   color: #000;
   padding: 2px 6px;
   border-radius: 4px;
@@ -239,3 +239,406 @@ header {
     font-size: 1.2rem;
   }
 }
+
+
+
+
+
+
+
+
+
+
+/* ===== Fixed Logo Slider Code ===== */
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-200px * 5)); /* 5 logos x 200px */
+  }
+}
+
+.slider {
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  padding: 20px 0;
+}
+
+.slide-track {
+  display: flex;
+  gap: 20px; /* 👈 LESS space between logos */
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+.slide {
+  flex: 0 0 auto;
+  width: 200px; /* 👈 Larger default width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.slide img:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ Responsive Layouts */
+@media (max-width: 1024px) {
+  .slide {
+    width: 160px;
+  }
+
+  .slide img {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    width: 140px;
+  }
+
+  .slide img {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide {
+    width: 120px;
+  }
+
+  .slide img {
+    max-width: 100px;
+  }
+}
+
+
+
+
+
+
+
+/*------------------------------ Featured Job --------------------------------------- */
+
+
+
+   .featured-jobs {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .featured-jobs h2 {
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .featured-jobs p {
+      color: #777;
+      margin-bottom: 2rem;
+    }
+
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .job-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .job-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-card img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .job-info {
+      text-align: left;
+    }
+
+    .job-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .full-time {
+      background-color: rgb(98, 197, 0); /* pink-red bg */
+      color: #ffffff;            /* pink-red text */
+    }
+
+    .see-more-btn {
+      display: inline-block;
+      background-color: #ff0303;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .see-more-btn:hover {
+      background-color: #333;
+    }
+
+    @media (max-width: 480px) {
+      .job-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .job-info {
+        text-align: center;
+      }
+
+      .tags {
+        justify-content: center;
+      }
+    }
+
+
+.featured-jobs h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.featured-jobs p {
+  font-size: 1.1rem;
+  color: #777;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive text scaling */
+@media (max-width: 768px) {
+  .featured-jobs h2 {
+    font-size: 2rem;
+  }
+
+  .featured-jobs p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-jobs h2 {
+    font-size: 1.5rem;
+  }
+
+  .featured-jobs p {
+    font-size: 0.95rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/*-------------------------------- Tetomonial  */
+  body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .testimonial-wrapper {
+      background-color: #FFF2F2;
+      padding: 60px 20px;
+      margin: 80px 0;
+      width: 100%;
+    }
+
+    .testimonial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* ✅ Heading + Paragraph */
+    .testimonial-header h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .testimonial-header p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .testimonial-slider {
+      overflow: hidden;
+    }
+
+    .testimonial-track {
+      display: flex;
+      transition: transform 1s ease;
+    }
+
+    .testimonial {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 30px;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .testimonial {
+        min-width: 50%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .testimonial {
+        min-width: 33.33%;
+      }
+    }
+
+    .testimonial-box {
+      background-color: white;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+      display: inline-block;
+      max-width: 80%;
+    }
+
+    .testimonial-box::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -10px;
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-top-color: white;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      position: relative;
+      padding: 10px 20px;
+    }
+
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: "❝";
+      font-size: 2rem;
+      color: rgb(251, 131, 151);
+      position: absolute;
+    }
+
+    .testimonial-text::after {
+      content: "❞";
+      bottom: -10px;
+      right: -20px;
+    }
+
+    .testimonial-text::before {
+      top: -10px;
+      left: -20px;
+    }
+
+    .profile {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .profile strong {
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: black;
+    }
+
+    .profile span {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .testimonial-box {
+        max-width: 95%;
+      }
+
+      .testimonial-header h2 {
+        font-size: 1.6rem;
+      }
+
+      .testimonial-header p {
+        font-size: 0.95rem;
+      }
+    }
+
+
+
+
+    

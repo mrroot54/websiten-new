@@ -641,4 +641,249 @@ header {
 
 
 
-    
+
+
+/*------------------------- Resume Upload  --------------------------- */
+
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .xr-hero {
+      position: relative;
+      margin-top: 40px;
+      padding: 20px 15px; /* Reduced padding */
+      min-height: 280px;
+      width: 100%;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e2a38);
+      background-size: 400% 400%;
+      animation: xr-animatedBG 30s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes xr-animatedBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .xr-subtext, h1, .xr-upload-btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    .xr-subtext {
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .xr-upload-btn {
+      background-color: #e60000;
+      color: white;
+      padding: 10px 22px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 0;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .xr-upload-btn:hover {
+      background-color: #cc0000;
+    }
+
+    .xr-icon {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      opacity: 0.07;
+      animation: xr-floatIcon 10s linear infinite;
+      z-index: 0;
+    }
+
+    .xr-icon:nth-child(1) { top: 90%; left: 10%; animation-delay: 0s; }
+    .xr-icon:nth-child(2) { top: 95%; left: 30%; animation-delay: 2s; }
+    .xr-icon:nth-child(3) { top: 92%; left: 50%; animation-delay: 4s; }
+    .xr-icon:nth-child(4) { top: 98%; left: 70%; animation-delay: 6s; }
+    .xr-icon:nth-child(5) { top: 94%; left: 85%; animation-delay: 8s; }
+
+    @keyframes xr-floatIcon {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.1;
+      }
+      50% {
+        transform: translateY(-160px) scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-320px) scale(0.9);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .xr-upload-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+
+      .xr-icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      .xr-upload-btn {
+        font-size: 13px;
+        padding: 8px 18px;
+      }
+
+      .xr-hero {
+        padding: 15px 8px; /* Reduced mobile padding */
+      }
+    }
+
+
+
+
+  
+
+
+/*-------------------------------------News Section-----------------------------------------  */
+
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+      font-size: 16px;
+    }
+
+    .job-slider-container {
+      overflow: hidden;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .job-slider-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .job-news-card {
+      min-width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 600px) {
+      .job-news-card {
+        min-width: 50%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .job-news-card {
+        min-width: 33.33%;
+      }
+    }
+
+    .job-card-img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+
+    .job-card-content {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .job-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .job-card-desc {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
+      flex-grow: 1;
+      text-align: justify;
+    }
+
+    @media (max-width: 600px) {
+      .job-card-desc {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+    }
+
+    .job-read-btn {
+      margin-top: 15px;
+      text-decoration: none;
+      color: #fff;
+      background: #e74c3c;
+      padding: 10px;
+      border-radius: 6px;
+      display: inline-block;
+      text-align: center;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .job-read-btn:hover {
+      background: #c0392b;
+    }

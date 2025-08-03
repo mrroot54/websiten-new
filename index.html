@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown Celebration</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1f0036, #000000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .powered {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffea00;
+      text-shadow: 0 0 10px #ffea00, 0 0 20px #ffae00;
+      animation: glow 2s ease-in-out infinite alternate;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ffea00;
+      }
+      to {
+        text-shadow: 0 0 20px #ffae00;
+      }
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      padding: 10px 25px;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      z-index: 2;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 20px 40px;
+      border-radius: 15px;
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      z-index: 2;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="powered">Powered by Xitamin Solution Pvt. Ltd.</div>
+  <h1>Countdown to Launch</h1>
+  <div id="countdown">Loading...</div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Confetti JS -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // 🎯 Target time: 12:00 PM
+    const targetHour = 17;
+    const targetMinute = 0;
+    const now = new Date();
+    let targetTime = new Date();
+    targetTime.setHours(targetHour, targetMinute, 0, 0);
+
+    if (now > targetTime) {
+      targetTime.setDate(targetTime.getDate() + 1);
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetTime - now;
+
+      if (diff <= 0) {
+        launchCelebration();
+        setTimeout(() => {
+          window.location.href = "web.html";
+        }, 3000);
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerText =
+        `${hours.toString().padStart(2, '0')} : ` +
+        `${minutes.toString().padStart(2, '0')} : ` +
+        `${seconds.toString().padStart(2, '0')}`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // 🎊 Continuous Confetti
+    setInterval(() => {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+      });
+    }, 400);
+
+    // 🎉 One-time big burst at launch
+    function launchCelebration() {
+      var duration = 2 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        confetti(Object.assign({}, defaults, {
+          particleCount: 100,
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          }
+        }));
+      }, 250);
+    }
+  </script>
+
+</body>
+</html>

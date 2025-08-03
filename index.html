@@ -1,126 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Launch Countdown</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            font-family: Arial, sans-serif;
-            margin: 0;
-            overflow: hidden;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-        #countdown {
-            font-size: 4rem;
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px 40px;
-            border-radius: 10px;
-        }
-        #poweredBy {
-            position: absolute;
-            top: 20px;
-            font-size: 1rem;
-            color: white;
-        }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Countdown Celebration</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1f0036, #000000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .powered {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffea00;
+      text-shadow: 0 0 10px #ffea00, 0 0 20px #ffae00;
+      animation: glow 2s ease-in-out infinite alternate;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ffea00;
+      }
+      to {
+        text-shadow: 0 0 20px #ffae00;
+      }
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      padding: 10px 25px;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      z-index: 2;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 20px 40px;
+      border-radius: 15px;
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      z-index: 2;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-    <div id="poweredBy">Powered by Xitamin Solution Pvt. Ltd.</div>
-    <h1>Countdown to Launch</h1>
-    <div id="countdown">00:00:00</div>
-    <canvas id="confetti-canvas"></canvas>
 
-    <script>
-        const targetHour = 16;      // 4 PM
-        const targetMinute = 15;    // 15 minutes
+  <div class="powered">Powered by Xitamin Solution Pvt. Ltd.</div>
+  <h1>Countdown to Launch</h1>
+  <div id="countdown">Loading...</div>
 
-        let now = new Date();
-        let targetTime = new Date();
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
 
-        targetTime.setHours(targetHour);
-        targetTime.setMinutes(targetMinute);
-        targetTime.setSeconds(0);
-        targetTime.setMilliseconds(0);
+  <!-- Confetti JS -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        if (now > targetTime) {
-            targetTime.setDate(targetTime.getDate() + 1);
+  <script>
+    // 🎯 Target time: 4:15 PM
+    const targetHour = 16;
+    const targetMinute = 15;
+    const now = new Date();
+    let targetTime = new Date();
+    targetTime.setHours(targetHour, targetMinute, 0, 0);
+
+    if (now > targetTime) {
+      targetTime.setDate(targetTime.getDate() + 1);
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetTime - now;
+
+      if (diff <= 0) {
+        launchCelebration();
+        setTimeout(() => {
+          window.location.href = "web.html";
+        }, 3000);
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerText =
+        `${hours.toString().padStart(2, '0')} : ` +
+        `${minutes.toString().padStart(2, '0')} : ` +
+        `${seconds.toString().padStart(2, '0')}`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // 🎊 Continuous Confetti
+    setInterval(() => {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+      });
+    }, 400);
+
+    // 🎉 One-time big burst at launch
+    function launchCelebration() {
+      var duration = 2 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
         }
 
-        function updateCountdown() {
-            const now = new Date();
-            const difference = targetTime - now;
+        confetti(Object.assign({}, defaults, {
+          particleCount: 100,
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          }
+        }));
+      }, 250);
+    }
+  </script>
 
-            if (difference <= 0) {
-                document.getElementById("countdown").textContent = "00:00:00";
-                launchCelebration();
-                setTimeout(() => {
-                    window.location.href = "web.html";
-                }, 3000);
-                return;
-            }
-
-            const hours = String(Math.floor(difference / (1000 * 60 * 60))).padStart(2, '0');
-            const minutes = String(Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            const seconds = String(Math.floor((difference % (1000 * 60)) / 1000)).padStart(2, '0');
-
-            document.getElementById("countdown").textContent = `${hours} : ${minutes} : ${seconds}`;
-        }
-
-        function launchCelebration() {
-            const duration = 2 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
-
-            const interval = setInterval(() => {
-                const timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        setInterval(() => {
-            confetti({
-                particleCount: 2,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-            });
-            confetti({
-                particleCount: 2,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-            });
-        }, 400);
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    </script>
 </body>
 </html>

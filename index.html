@@ -52,7 +52,7 @@
     <canvas id="confetti-canvas"></canvas>
 
     <script>
-        const targetHour = 18;      // 4 PM
+        const targetHour = 16;      // 4 PM
         const targetMinute = 15;    // 15 minutes
 
         let now = new Date();
@@ -63,7 +63,6 @@
         targetTime.setSeconds(0);
         targetTime.setMilliseconds(0);
 
-        // If current time is already past target time, set for next day
         if (now > targetTime) {
             targetTime.setDate(targetTime.getDate() + 1);
         }

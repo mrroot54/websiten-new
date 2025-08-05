@@ -892,6 +892,248 @@ header {
 
 
 
+
+
+  /*------------------------------- Recruiting ---------------------------------------------------- */
+
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .recruit-sec-wrapper {
+      width: 100%;
+      background: #fff1f1;
+      padding: 60px 5% 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .recruit-sec-text {
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    .recruit-sec-title {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .recruit-sec-desc {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .recruit-sec-button {
+      background-color: #f44336;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .recruit-sec-img {
+      flex-shrink: 0;
+    }
+
+    .recruit-sec-img img {
+      max-width: 150px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .recruit-sec-wrapper {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .recruit-sec-text {
+        padding: 0;
+      }
+
+      .recruit-sec-img {
+        margin-top: 20px;
+      }
+
+      .recruit-sec-img img {
+        max-width: 120px;
+      }
+    }
+  </style>
+
+
+
+/*------------------------------------ Contact Us ------------------------------------------------------- */
+
+<style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f3f3f3;
+    }
+
+    .contact_us_8 {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .form-box {
+      display: flex;
+      flex-direction: row;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      max-width: 1000px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .form-left, .form-right {
+      padding: 40px;
+      flex: 1;
+    }
+
+    .form-left {
+      background-color: white;
+    }
+
+    .form-right {
+      background-color: rgba(151, 220, 250, 0.44);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .form-right .text-blk {
+      margin-bottom: 20px;
+    }
+
+    .form-right .contactus-head {
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .form-right .contactus-subhead {
+      font-size: 16px;
+      color: #333;
+      max-width: 300px;
+    }
+
+    .social-media-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-media-links img {
+      width: 24px;
+      height: 24px;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 2px solid #eee;
+      border-radius: 64px;
+      padding: 12px 18px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      border-radius: 20px;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #444;
+      font-weight: 500;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background-color: red;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      padding: 14px;
+      border-radius: 64px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: darkred;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-group input {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .checkbox-text {
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      .form-box {
+        flex-direction: column;
+      }
+
+      .form-left,
+      .form-right {
+        padding: 20px;
+      }
+
+      .form-right .contactus-head {
+        font-size: 26px;
+      }
+
+      .form-right .contactus-subhead {
+        max-width: 100%;
+      }
+    }
+  </style>
+
+  
+
+
     /*----------------------------- Footer ------------------------------------------------------- */
 
  * {

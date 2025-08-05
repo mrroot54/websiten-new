@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- ✅ Lottie Player CDN -->
+  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- ✅ Wrapper for top colored section -->
+  <div class="top-bg-wrapper">
+    <header>
+      <img src="logo2.png" alt="Xitaminnakuri Logo" class="logo" />
+      <div class="header-buttons">
+        <button class="btn black">Post Your Resume</button>
+        <button class="btn red">View Job</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>There Are <span class="highlight">93,178</span> Postings Here For you!</h1>
+        <p>Find Jobs, Employment & Career Opportunities</p>
+
+      <div class="search-box">
+  <div class="input-wrapper">
+    <i class="fas fa-search input-icon"></i>
+    <input type="text" placeholder="job title, keyword..." />
+  </div>
+  <div class="input-wrapper">
+    <i class="fas fa-location-dot input-icon"></i>
+    <input type="text" placeholder="city pin code..." />
+  </div>
+  <button>Find Jobs</button>
+</div>
+
+
+
+
+        <p class="popular">
+          <strong>Popular Searches :</strong> Designer, Developer, Web, IOS, PHP, Senior, Engineer
+        </p>
+      </div>
+
+      <!-- ✅ Right Side Hero Animation + Notification -->
+      <div class="hero-right">
+        
+
+        <!-- ✅ Job Search Lottie Animation -->
+  
+ <div class="lottie-wrapper">
+  <dotlottie-wc
+    src="https://lottie.host/f1780225-acae-459f-ae30-e07475521453/St3k5tZhmg.lottie"
+    style="width: 300px; height: 300px;"
+    speed="1"
+    autoplay
+    loop>
+  </dotlottie-wc>
+</div>
+
+
+
+<div class="notification email">
+  <i class="fas fa-envelope email-icon"></i> Work Inquiry From<br>
+  <strong class="highlight-name">Ali Tufan</strong>
+</div>
+
+
+
+    </section>
+  </div>
+
+
+
+
+
+  <!---------------------------- partner companies  Logos ------------------------------------------ -->
+
+
+
+<div class="slider">
+  <div class="slide-track">
+    <div class="slide"><img src="company-logo/logo1.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo2.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo3.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo4.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo5.jpg" alt=""></div>
+
+    <!-- Duplicate for looping -->
+    <div class="slide"><img src="company-logo/logo1.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo2.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo3.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo4.jpg" alt=""></div>
+    <div class="slide"><img src="company-logo/logo5.jpg" alt=""></div>
+  </div>
+</div>
+
+
+<br>
+
+<!--------------------------------- Featured Tab  -------------------------------------->
+
+
+
+<section class="featured-jobs">
+  <h2>Featured Jobs</h2>
+  <p>Know your worth and find the job that qualifies your life</p>
+
+  <div class="job-grid">
+    <!-- Job Card 1 - Graphic Designer -->
+    <a href="#" class="job-card">
+      <img src="img/job/graphic-designer.png" alt="Company Logo" />
+      <div class="job-info">
+        <div class="job-title">Graphic Designer </div>
+        <div class="tags">
+          <span class="tag full-time">Full Time</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Job Card 2 - Accountant -->
+    <a href="#" class="job-card">
+      <img src="img/job/account.png" alt="Company Logo" />
+      <div class="job-info">
+        <div class="job-title">Accountant</div>
+        <div class="tags">
+          <span class="tag full-time">Full Time</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Job Card 3 - Tax Operator -->
+    <a href="#" class="job-card">
+      <img src="img/job/taxes.png" alt="Company Logo" />
+      <div class="job-info">
+        <div class="job-title">Tax Operator</div>
+        <div class="tags">
+          <span class="tag full-time">Full Time</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Job Card 4 - Security Guard -->
+    <a href="#" class="job-card">
+      <img src="img/job/guard.png" alt="Company Logo" />
+      <div class="job-info">
+        <div class="job-title">Security Guard</div>
+        <div class="tags">
+          <span class="tag full-time">Full Time</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- See More Button -->
+  <a class="see-more-btn" href="https://xitaminnakuri.com/job" target="_blank">See More Job</a>
+</section>
+
+
+ <!-- ✅ Final Wrapper with full background -->
+ 
+<div class="testimonial-wrapper">
+    <div class="testimonial-container">
+      
+      <!-- ✅ New Heading and Paragraph -->
+      <div class="testimonial-header">
+        <h2>Testimonials From Our Customers</h2>
+        <p> Stories That Shine.</p>
+      </div>
+
+      <div class="testimonial-slider">
+        <div class="testimonial-track" id="testimonialTrack">
+
+          <!-- 1 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+I found a graphic designer job fast. Great support and smooth experience!              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="User">
+              <strong>Rohit kumar</strong>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                This site helped me get an accountant job. Quick and very easy process!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="User">
+              <strong>Atul Singh </strong>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+               Applied here and became a tax operator. Trusted and useful platform!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
+              <strong> Priya Sinha</strong>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                Got hired as a graphic designer within days. Really helped me a lot!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="User">
+              <strong>Neha Joshi</strong>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+               I secured my accountant role fast. Super reliable and easy-to-use site!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="User">
+              <strong>Rahul Singh</strong>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                Found a tax operator job in no time. Great tool for job searching here!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+              <strong>Anjali Singh</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!------------------------------ Heading Line  ----------------------------------- -->
+
+<div style="text-align: center;">
+  <h2 class="featured-jobs">TOP CAREER PACKAGES</h2>
+</div>
+
+<!--------------------------Resume Upload -------------------------------- -->
+
+<div class="xr-hero">
+    <!-- Floating icons -->
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+
+<!-- Text and button -->
+    
+    <h1>Stand Out with a Resume That<br>Speaks for You!</h1>
+    <button class="xr-upload-btn" onclick="uploadCV()">UPLOAD YOUR CV</button>
+  </div>
+
+
+  <br><br>
+
+
+
+<!-----------------------------  News Section ------------------------------------------------------------- -->
+
+
+ <h2>Latest Jobs by Xitamin</h2>
+  <p>Auto sliding job cards, responsive on all devices.</p>
+
+  <div class="job-slider-container">
+    <div class="job-slider-track" id="sliderTrack">
+
+      <!-- CARD 1 -->
+      <div class="job-news-card">
+        <img src="img/news/Graphic.jpg" class="job-card-img" alt="Graphic Designer">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Graphic Designer</h3>
+          <p class="job-card-desc">Join our creative design team at Xitamin. Work with Adobe, Figma & more.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="job-news-card">
+        <img src="img/news/Accountant.jpg" class="job-card-img" alt="Accountant">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Accountant</h3>
+          <p class="job-card-desc">We're hiring skilled accountants with Tally, GST, and Excel knowledge.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="job-news-card">
+        <img src="img/job/taxes.png" class="job-card-img" alt="Tax Operator">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Tax Operator</h3>
+          <p class="job-card-desc">Apply for tax filing & return jobs at Xitamin. TDS & ITR knowledge required.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="job-news-card">
+        <img src="img/news/Security .jpg" class="job-card-img" alt="Security Guard">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Security Guard</h3>
+          <p class="job-card-desc">We’re hiring security guards for residential and commercial buildings.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="job-news-card">
+        <img src="img/news/Office.jpg" class="job-card-img" alt="Office Assistant">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Office Assistant</h3>
+          <p class="job-card-desc">Join our team as a full-time office assistant. Basic computer skills needed.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<br><br>
+
+<h2> Recruiting Platform for Job Providers </h2>
+<br>
+<!------------------------------------ Recruiting ------------------------------------------------->
+ 
+<section class="recruit-sec-wrapper">
+    <!-- TEXT -->
+    <div class="recruit-sec-text">
+      <h1 class="recruit-sec-title">Recruiting?</h1>
+      <h4 class="recruit-sec-desc">Advertise your jobs to millions of monthly users and search 15.8 million CVs in our database.</h4>
+      <a href="#" class="recruit-sec-button">Start Recruiting Now</a>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="recruit-sec-img">
+      <img src="img/hiring/1.png" alt="Hiring Image">
+    </div>
+  </section>
+
+
+
+
+
+<!------------------------------------ Contact US --------------------------------------------------->
+
+<br><br>
+<h2>📞 Contact Us</h2>
+  <p>We’re here to help with your questions, feedback, or ideas.</p>
+
+
+  
+<div class="contact_us_8">
+  <form class="form-box">
+    <!-- Left Form Section -->
+    <div class="form-left">
+      <input type="text" name="FirstName" placeholder="First Name" required>
+      <input type="text" name="LastName" placeholder="Last Name" required>
+      <input type="email" name="Email" placeholder="Email" required>
+      <input type="tel" name="PhoneNumber" placeholder="Phone Number" required>
+      <textarea name="Message" placeholder="What's on your mind?" required></textarea>
+      <div class="checkbox-group">
+        <input type="checkbox" id="agree">
+        <label class="checkbox-text" for="agree">I agree to the privacy policy.</label>
+      </div>
+      <button type="submit" class="submit-btn">Submit</button>
+    </div>
+
+    <!-- Right Info Section -->
+    <div class="form-right">
+      <p class="text-blk contactus-head">Contact Us</p>
+      <p class="text-blk contactus-subhead">
+         Have a question or need help? Just send us a message — we’re happy to assist you anytime.
+      </p>
+      <div class="social-media-links">
+        <a href="#"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-twitter.png"></a>
+        <a href="#"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png"></a>
+        <a href="#"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-google.png"></a>
+        <a href="#"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png"></a>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <br><br><br>
+
+
+<!-- 🔴 Background Job Icons -->
+<div class="job-icons-background">
+  <i class="fas fa-briefcase"></i>
+  <i class="fas fa-user-tie"></i>
+  <i class="fas fa-search"></i>
+  <i class="fas fa-file-alt"></i>
+  <i class="fas fa-handshake"></i>
+</div>
+
+<!-- ✅ Footer Starts Here -->
+<footer class="new-footer">
+  <div class="footer-card">
+
+    <!-- Left -->
+    <div class="footer-left">
+      <h2>XITAMIN <span>NAUKRI</span> .COM</h2>
+      <p class="unit">An unit of Xitamin Solution Pvt. Ltd.</p>
+      <p class="cin">CIN: U93090BR2018PTC039359</p>
+    </div>
+
+    <!-- Center -->
+    <div class="footer-center">
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="footer-right">
+      <ul>
+        <li><strong>Address:</strong> 7th Floor, GenX Icon,<br>Above Pramod Laddu Bhandar, Saguna More, Patna-20</li>
+        <li><strong>Email:</strong> <a href="mailto:enquiry@xitaminnaukri.com">enquiry@xitaminnaukri.com</a></li>
+        <li><strong>Website:</strong> <a href="https://www.xitaminnaukri.com" target="_blank">www.xitaminnaukri.com</a></li>
+        <li><strong>Phone:</strong> <a href="tel:+919471092854">+91 9471092854</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <p><span class="highlight-copy">© 2018–2025 Xitamin Naukri. All Rights Reserved.</span></p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+<script>
+    const track = document.getElementById("sliderTrack");
+    let index = 0;
+
+    function autoSlide() {
+      const cards = document.querySelectorAll(".job-news-card");
+      const cardWidth = cards[0].offsetWidth + 20;
+      const total = cards.length;
+      const visible = getVisibleCount();
+
+      index++;
+      if (index > total - visible) index = 0;
+
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+
+    function getVisibleCount() {
+      const width = window.innerWidth;
+      if (width >= 1024) return 3;
+      if (width >= 600) return 2;
+      return 1;
+    }
+
+    setInterval(autoSlide, 3000);
+
+    window.addEventListener('resize', () => {
+      index = 0;
+      track.style.transform = `translateX(0px)`;
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+ <!-- 🔁 JavaScript -->
+  <script>
+    const track = document.getElementById('testimonialTrack');
+    const slides = document.querySelectorAll('.testimonial');
+    let currentIndex = 0;
+
+    function getVisibleSlides() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    function moveToNextSlide() {
+      const visibleSlides = getVisibleSlides();
+      const totalSlides = slides.length;
+      const maxIndex = totalSlides - visibleSlides;
+
+      currentIndex = (currentIndex + 1) > maxIndex ? 0 : currentIndex + 1;
+      const movePercent = currentIndex * (100 / visibleSlides);
+      track.style.transform = `translateX(-${movePercent}%)`;
+    }
+
+    setInterval(moveToNextSlide, 5000);
+
+    window.addEventListener("resize", () => {
+      currentIndex = 0;
+      track.style.transform = "translateX(0%)";
+    });
+  </script>
+
+  <script>
+    function uploadCV() {
+      alert("Upload functionality is not implemented yet.");
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+ <script src="script.js"></script>
+</body>
+</html>

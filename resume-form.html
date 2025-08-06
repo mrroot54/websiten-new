@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Your CV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1d2b64, #f8cdda);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .floating-icon {
+      position: absolute;
+      opacity: 0.25;
+      animation: floatIcon 35s linear infinite;
+      z-index: 0;
+    }
+
+    .floating-icon:nth-child(1) { top: 5%; left: -80px; width: 100px; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 20%; left: -100px; width: 120px; animation-delay: 5s; }
+    .floating-icon:nth-child(3) { top: 45%; left: -60px; width: 90px; animation-delay: 10s; }
+    .floating-icon:nth-child(4) { top: 65%; left: -140px; width: 110px; animation-delay: 7s; }
+    .floating-icon:nth-child(5) { top: 85%; left: -120px; width: 100px; animation-delay: 3s; }
+
+    .floating-icon.boy {
+      width: 130px;
+      top: 30%;
+      left: -150px;
+      opacity: 0.35;
+      animation-delay: 2s;
+    }
+
+    @keyframes floatIcon {
+      0% { transform: translateX(0) rotate(0deg); opacity: 0.2; }
+      50% { transform: translateX(100vw) rotate(180deg); opacity: 0.4; }
+      100% { transform: translateX(100vw) rotate(360deg); opacity: 0.2; }
+    }
+
+    .form-card {
+      background: #ffffffdd;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      width: 100%;
+      max-width: 950px;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .upload-label {
+      margin-top: 10px;
+      background-color: #f1f2f6;
+      border: 2px dashed #7ed6df;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .upload-label:hover {
+      background-color: #dff9fb;
+    }
+
+    .upload-label input[type="file"] {
+      display: none;
+    }
+
+    input[type="submit"] {
+      grid-column: span 2;
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #74b9ff;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .form-card {
+        padding: 25px;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      input[type="submit"] {
+        grid-column: span 1;
+      }
+
+      .full-width {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Resume Icons -->
+  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="floating-icon" alt="resume" />
+  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="floating-icon" alt="resume" />
+  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="floating-icon" alt="resume" />
+  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="floating-icon" alt="resume" />
+  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="floating-icon" alt="resume" />
+  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" class="floating-icon boy" alt="job seeker" />
+
+  <div class="form-card">
+    <h2>Submit Your CV</h2>
+    <form id="cvForm">
+      <div>
+        <label>Full Name:</label>
+        <input type="text" name="name" required>
+      </div>
+
+      <div>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div>
+        <label>Phone Number:</label>
+        <input type="text" name="phone" required>
+      </div>
+
+      <div>
+        <label>Alternate Number:</label>
+        <input type="text" name="alternate_phone">
+      </div>
+
+      <div>
+        <label>Date of Birth:</label>
+        <input type="date" name="dob" required>
+      </div>
+
+      <div>
+        <label>Gender:</label>
+        <select name="gender" required>
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="full-width">
+        <label>Address:</label>
+        <textarea name="address" required></textarea>
+      </div>
+
+      <div>
+        <label>Education:</label>
+        <input type="text" name="education" required>
+      </div>
+
+      <div>
+        <label>Skills:</label>
+        <input type="text" name="skills" required>
+      </div>
+
+      <div class="full-width">
+        <label>Experience:</label>
+        <textarea name="experience" required></textarea>
+      </div>
+
+      <div class="full-width">
+        <label>Position Applying For:</label>
+        <input type="text" name="position" required>
+      </div>
+
+      <div class="full-width">
+        <label>Upload Your Photo:</label>
+        <label class="upload-label">
+          📄 Click to Upload Photo
+          <input type="file" name="photo" accept="image/*" required>
+        </label>
+      </div>
+
+      <input type="submit" value="Submit CV">
+    </form>
+
+    <div class="success-message" id="successMessage">
+      ✅ Your CV has been submitted successfully!
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("cvForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      // Normally, form data would be submitted to server
+      document.getElementById("successMessage").style.display = "block";
+      this.reset();
+    });
+  </script>
+</body>
+</html>

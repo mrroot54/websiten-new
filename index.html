@@ -1,314 +1,653 @@
-<?php
-// Include database connection
-require_once 'db.php';
-
-// Handle search, filter, sort, pagination
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
-$job_category = isset($_GET['job_category']) ? $_GET['job_category'] : '';
-$location = isset($_GET['location']) ? $_GET['location'] : '';
-$sort = isset($_GET['sort']) ? $_GET['sort'] : 'created_at';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$perPage = 18; // Jobs per page
-$offset = ($page - 1) * $perPage;
-
-// Base SQL
-$sql = "SELECT * FROM approved_job_listings WHERE status='Open' AND approval_status='Approved'";
-
-// Add search filters
-if(!empty($search)){
-    $sql .= " AND (job_title LIKE '%$search%' OR company_name LIKE '%$search%' OR job_location LIKE '%$search%')";
-}
-if(!empty($job_type)){
-    $sql .= " AND job_type='$job_type'";
-}
-if(!empty($job_category)){
-    $sql .= " AND job_category='$job_category'";
-}
-if(!empty($location)){
-    $sql .= " AND job_location='$location'";
-}
-
-// Sorting
-switch($sort){
-    case 'salary':
-        $sql .= " ORDER BY salary DESC";
-        break;
-    case 'deadline':
-        $sql .= " ORDER BY deadline ASC";
-        break;
-    default:
-        $sql .= " ORDER BY created_at DESC";
-}
-
-// Pagination
-$sql .= " LIMIT $offset, $perPage";
-$result = $conn->query($sql);
-
-// Fetch unique values for filters
-$types = $conn->query("SELECT DISTINCT job_type FROM approved_job_listings");
-$categories = $conn->query("SELECT DISTINCT job_category FROM approved_job_listings");
-$locations = $conn->query("SELECT DISTINCT job_location FROM approved_job_listings");
-?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JobPortal - Latest Jobs</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-body { font-family: 'Inter', sans-serif; background: #eef2f7; color:#333; margin:0; padding:0;}
-.container { max-width:1200px; margin:auto; padding:20px;}
-.header { text-align:center; margin-bottom:30px;}
-.header h1 { font-size:2.5rem; color:#1f2937; margin-bottom:5px;}
-.header p { color:#6b7280; font-size:1rem; }
-
-.filters { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:30px; justify-content:center;}
-.filters input, .filters select, .filters button { padding:10px 12px; border-radius:10px; border:1px solid #ccc; font-size:0.95rem; transition: all 0.3s;}
-.filters input:focus, .filters select:focus { outline:none; border-color:#3b82f6; box-shadow:0 0 8px rgba(59,130,246,0.2);}
-.filters button { background: linear-gradient(90deg,#3b82f6,#2563eb); color:#fff; border:none; cursor:pointer; font-weight:600;}
-.filters button:hover { opacity:0.9; transform:scale(1.03);}
-
-.job-list { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:25px;}
-
-.job-card {
-    position: relative;
-    background: linear-gradient(135deg, #ffffff, #f0f4ff);
-    border-radius:15px;
-    padding:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
-}
-.job-card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow:0 20px 40px rgba(0,0,0,0.2);
-    border: 1px solid #3b82f6;
-}
-
-.job-number {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;        
-    height: 20px;       
-    background-color: #e5b737ff;  
-    color: #000;        
-    font-weight: 500;
-    font-size: 1.1rem;  
-    border-radius: 8px; 
-    margin-bottom: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.job-title { font-size:1.35rem; font-weight:700; margin-bottom:6px; color:#1f2937;}
-.company-name { font-size:1rem; color:#4b5563; margin-bottom:6px;}
-.job-location, .job-type { font-size:0.95rem; font-weight:600; color:#374151; margin-bottom:6px;}
-.job-description, .qualifications, .experience, .salary, .benefits, .company-overview, .work-schedule, .job-category, .vacancies, .created-at { font-size:0.9rem; color:#4b5563; margin-bottom:8px;}
-
-/* --- Apply Button --- */
-.apply-btn {
-    display:block;
-    width:100%;
-    text-align:center;
-    padding:12px 0;
-    background: linear-gradient(90deg,#3b82f6,#2563eb);
-    color:#fff;
-    font-weight:600;
-    border-radius:12px;
-    text-decoration:none;
-    font-size:1rem;
-    transition:all 0.3s;
-    margin-top:12px;
-}
-.apply-btn:hover { transform:scale(1.02); box-shadow:0 8px 20px rgba(59,130,246,0.3); }
-
-/* --- Meta Row (Deadline + Applied Count) --- */
-.apply-meta {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-}
-
-.deadline-small {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
-    color: #dc2626;
-    background: #fee2e2;
-    padding: 3px 8px;
-    border-radius: 6px;
-}
-.deadline-small svg {
-    width: 14px;
-    height: 14px;
-    fill: #dc2626;
-}
-
-/* --- Applied Count Icon --- */
-.applied-icon {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #2563eb;
-    background: #e0f2fe;
-    padding: 6px 10px;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.applied-icon svg {
-    width: 16px;
-    height: 16px;
-    fill: #2563eb;
-}
-
-/* --- BADGES --- */
-.job-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 6px;
-}
-.badge { padding:4px 10px; border-radius:8px; font-size:0.75rem; font-weight:600; color:#fff;}
-.badge-new { background:#10b981; }
-.badge-remote { background:#f59e0b; }
-.badge-urgent { background:#ef4444; }
-
-.pagination { margin-top:25px; text-align:center;}
-.pagination a { padding:10px 15px; margin:3px; border-radius:8px; border:1px solid #ccc; text-decoration:none; color:#374151; transition:all 0.3s;}
-.pagination a.active { background:#3b82f6; color:#fff; border:none;}
-.pagination a:hover { background:#2563eb; color:#fff;}
-
-@media(max-width:768px){.filters{flex-direction:column;}.header h1{font-size:2rem;}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-header h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .section-header p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .company-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #3498db;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .job-content {
+            flex-grow: 1;
+        }
+        
+        .company-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .company-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-right: 8px;
+        }
+        
+        .company-info p {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .job-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+        
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        
+        .job-detail {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .job-detail i {
+            margin-right: 4px;
+            color: #3498db;
+            font-size: 11px;
+        }
+        
+        .job-type {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: #e8f4fc;
+            color: #3498db;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .apply-btn {
+            padding: 6px 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 12px;
+            flex-shrink: 0;
+        }
+        
+        .apply-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .browse-more {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .browse-more-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .browse-more-btn:hover {
+            background-color: #1a252f;
+        }
+        
+        /* Tablet and Small Desktop Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 20px 10px;
+            }
+            
+            .section-header h2 {
+                font-size: 22px;
+            }
+            
+            .section-header p {
+                font-size: 13px;
+            }
+            
+            .job-card {
+                padding: 15px;
+            }
+            
+            .company-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+            
+            .job-title {
+                font-size: 15px;
+            }
+            
+            .apply-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        /* Mobile Landscape and Small Tablets */
+        @media (max-width: 600px) {
+            .job-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            
+            .company-logo {
+                margin-right: 0;
+                margin-bottom: 12px;
+            }
+            
+            .apply-btn {
+                margin-left: 0;
+                margin-top: 12px;
+                width: 100%;
+                padding: 10px;
+            }
+            
+            .job-details {
+                justify-content: center;
+            }
+            
+            .company-info {
+                justify-content: center;
+            }
+        }
+        
+        /* Mobile Portrait */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px 8px;
+            }
+            
+            .section-header {
+                margin-bottom: 20px;
+            }
+            
+            .section-header h2 {
+                font-size: 20px;
+            }
+            
+            .section-header p {
+                font-size: 12px;
+            }
+            
+            .job-card {
+                padding: 12px 8px;
+                border-radius: 8px;
+            }
+            
+            .company-logo {
+                width: 45px;
+                height: 45px;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .company-info {
+                flex-direction: column;
+                margin-bottom: 8px;
+            }
+            
+            .company-info h3 {
+                font-size: 14px;
+                margin-right: 0;
+                margin-bottom: 3px;
+            }
+            
+            .company-info p {
+                font-size: 12px;
+            }
+            
+            .job-title {
+                font-size: 15px;
+                margin-bottom: 8px;
+            }
+            
+            .job-details {
+                gap: 8px;
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            
+            .job-detail {
+                font-size: 11px;
+            }
+            
+            .job-detail i {
+                font-size: 10px;
+            }
+            
+            .job-type {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            
+            .apply-btn {
+                padding: 10px;
+                font-size: 13px;
+                border-radius: 5px;
+            }
+            
+            .browse-more-btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+        
+        /* Small Mobile Devices */
+        @media (max-width: 360px) {
+            .container {
+                padding: 12px 6px;
+            }
+            
+            .section-header h2 {
+                font-size: 18px;
+            }
+            
+            .section-header p {
+                font-size: 11px;
+            }
+            
+            .job-card {
+                padding: 10px 6px;
+            }
+            
+            .company-logo {
+                width: 40px;
+                height: 40px;
+                font-size: 13px;
+            }
+            
+            .company-info h3 {
+                font-size: 13px;
+            }
+            
+            .company-info p {
+                font-size: 11px;
+            }
+            
+            .job-title {
+                font-size: 14px;
+            }
+            
+            .job-details {
+                gap: 6px;
+            }
+            
+            .job-detail {
+                font-size: 10px;
+            }
+            
+            .job-type {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+            
+            .apply-btn {
+                padding: 9px;
+                font-size: 12px;
+            }
+            
+            .browse-more-btn {
+                padding: 9px 18px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Very Small Mobile Devices */
+        @media (max-width: 320px) {
+            .section-header h2 {
+                font-size: 17px;
+            }
+            
+            .company-logo {
+                width: 38px;
+                height: 38px;
+                font-size: 12px;
+            }
+            
+            .job-title {
+                font-size: 13px;
+            }
+            
+            .job-detail {
+                font-size: 9px;
+            }
+            
+            .job-type {
+                font-size: 8px;
+                padding: 1px 5px;
+            }
+            
+            .apply-btn {
+                padding: 8px;
+                font-size: 11px;
+            }
+            
+            .browse-more-btn {
+                padding: 8px 16px;
+                font-size: 11px;
+            }
+        }
+        
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .job-card:hover {
+                transform: none;
+            }
+            
+            .job-card:active {
+                transform: scale(0.98);
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .apply-btn:active {
+                background-color: #2980b9;
+                transform: scale(0.98);
+            }
+            
+            .browse-more-btn:active {
+                background-color: #1a252f;
+                transform: scale(0.98);
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>Latest Job Listings</h1>
-<p>Find your dream job and apply today!</p>
-</div>
-
-<!-- Filters & Search -->
-<form method="GET" class="filters">
-<input type="text" name="search" placeholder="Search Job Title, Company, Location" value="<?php echo htmlspecialchars($search); ?>">
-<select name="job_type">
-<option value="">All Types</option>
-<?php while($row = $types->fetch_assoc()){ ?>
-<option value="<?php echo $row['job_type']; ?>" <?php if($job_type==$row['job_type']) echo 'selected'; ?>><?php echo $row['job_type']; ?></option>
-<?php } ?>
-</select>
-<select name="job_category">
-<option value="">All Categories</option>
-<?php while($row = $categories->fetch_assoc()){ ?>
-<option value="<?php echo $row['job_category']; ?>" <?php if($job_category==$row['job_category']) echo 'selected'; ?>><?php echo $row['job_category']; ?></option>
-<?php } ?>
-</select>
-<select name="location">
-<option value="">All Locations</option>
-<?php while($row = $locations->fetch_assoc()){ ?>
-<option value="<?php echo $row['job_location']; ?>" <?php if($location==$row['job_location']) echo 'selected'; ?>><?php echo $row['job_location']; ?></option>
-<?php } ?>
-</select>
-<select name="sort">
-<option value="created_at" <?php if($sort=='created_at') echo 'selected'; ?>>Newest</option>
-<option value="salary" <?php if($sort=='salary') echo 'selected'; ?>>Salary High → Low</option>
-<option value="deadline" <?php if($sort=='deadline') echo 'selected'; ?>>Deadline Soonest</option>
-</select>
-<button type="submit">Filter</button>
-</form>
-
-<div class="job-list">
-<?php
-$counter = $offset + 1; // Serial number start
-if ($result->num_rows > 0) {
-    while($job = $result->fetch_assoc()){
-        echo '<div class="job-card">';
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Job Listings</h2>
+            <p>Discover your next career opportunity</p>
+        </div>
         
-        // Badges
-        echo '<div class="job-badge">';
-        if(strtotime($job['created_at']) > strtotime('-7 days')) echo '<span class="badge badge-new">New</span>';
-        if(stripos($job['job_type'],'Remote')!==false) echo '<span class="badge badge-remote">Remote</span>';
-        if($counter % 3 == 0){
-            echo '<span class="badge badge-urgent">Urgent Hiring</span>';
-        }
-        echo '</div>';
-
-        echo '<div class="job-number">'.$counter.'</div>';
-        echo '<div class="job-title">'.$job['job_title'].'</div>';
-        echo '<div class="company-name">'.$job['company_name'].'</div>';
-        echo '<div class="job-location">Location: '.$job['job_location'].'</div>';
-        echo '<div class="job-type">Type: '.$job['job_type'].'</div>';
-
-        // Job details
-        echo '<div class="job-description"><strong>Description:</strong> '.$job['job_description'].'</div>';
-        echo '<div class="qualifications"><strong>Qualifications:</strong> '.$job['qualifications'].'</div>';
-        echo '<div class="experience"><strong>Experience:</strong> '.$job['experience'].'</div>';
-        echo '<div class="salary"><strong>Salary:</strong> '.$job['salary'].'</div>';
-        echo '<div class="benefits"><strong>Benefits:</strong> '.$job['benefits'].'</div>';
-
-        echo '<div class="company-overview"><strong>Company Overview:</strong> '.$job['company_overview'].'</div>';
-        echo '<div class="work-schedule"><strong>Work Schedule:</strong> '.$job['work_schedule'].'</div>';
-        echo '<div class="job-category"><strong>Category:</strong> '.$job['job_category'].'</div>';
-        echo '<div class="vacancies"><strong>Vacancies:</strong> '.$job['vacancies'].'</div>';
-
-        echo '<div class="created-at"><strong>Posted On:</strong> '.$job['created_at'].'</div>';
-
-        // Format deadline
-        $deadlineFormatted = date("d/m/Y", strtotime($job['deadline']));
-
-        // Apply button + deadline + applied count
-        echo '<a href="#" class="apply-btn">Apply Now</a>
-              <div class="apply-meta">
-                  <div class="deadline-small">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M7 10h10v2H7v-2zm0 4h7v2H7v-2zm9-9V3h-2v2H10V3H8v2H5c-1.1 
-                        0-2 .9-2 2v12c0 1.1.9 2 2 
-                        2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3z"/>
-                      </svg>
-                      <span>'.$deadlineFormatted.'</span>
-                  </div>
-                  <div class="applied-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 12c2.21 0 4-1.79 
-                        4-4s-1.79-4-4-4-4 
-                        1.79-4 4 1.79 4 4 
-                        4zm0 2c-2.67 0-8 1.34-8 
-                        4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                      </svg>
-                      <span>'.rand(5,100).'</span>
-                  </div>
-              </div>';
-
-        echo '</div>';
-        $counter++;
-    }
-} else {
-    echo "<p>No jobs found.</p>";
-}
-
-// Pagination
-$totalJobs = $conn->query("SELECT COUNT(*) as total FROM approved_job_listings WHERE status='Open' AND approval_status='Approved'")->fetch_assoc()['total'];
-$totalPages = ceil($totalJobs / $perPage);
-
-echo '<div class="pagination">';
-for($i=1;$i<=$totalPages;$i++){
-    $active = ($i==$page) ? 'active' : '';
-    $queryParams = $_GET;
-    $queryParams['page']=$i;
-    echo '<a class="'.$active.'" href="?'.http_build_query($queryParams).'">'.$i.'</a>';
-}
-echo '</div>';
-
-$conn->close();
-?>
-</div>
-</div>
+        <div class="job-list">
+            <!-- Job Card 1 -->
+            <div class="job-card">
+                <div class="company-logo">TC</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>TechCorp</h3>
+                        <p>Technology Company</p>
+                    </div>
+                    <h4 class="job-title">Senior Frontend Developer</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>San Francisco, CA</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">Technology</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 2 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #e74c3c; color: white;">MD</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>MarketDirect</h3>
+                        <p>Marketing Agency</p>
+                    </div>
+                    <h4 class="job-title">Digital Marketing Manager</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>New York, NY</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">Marketing</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 3 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #2ecc71; color: white;">FS</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>FinServe</h3>
+                        <p>Financial Services</p>
+                    </div>
+                    <h4 class="job-title">Financial Analyst</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Chicago, IL</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">Finance</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 4 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #9b59b6; color: white;">DH</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>DataHub</h3>
+                        <p>Data Analytics</p>
+                    </div>
+                    <h4 class="job-title">Data Scientist</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Austin, TX</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">Data Science</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 5 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #f39c12; color: white;">ED</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>EduDesign</h3>
+                        <p>Educational Technology</p>
+                    </div>
+                    <h4 class="job-title">UX/UI Designer</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Seattle, WA</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Part-time</span>
+                        </div>
+                        <div class="job-type">Design</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 6 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #1abc9c; color: white;">HC</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>HealthCare Plus</h3>
+                        <p>Healthcare Services</p>
+                    </div>
+                    <h4 class="job-title">Registered Nurse</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Boston, MA</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">Healthcare</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 7 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #34495e; color: white;">CL</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>CloudLogix</h3>
+                        <p>Cloud Services</p>
+                    </div>
+                    <h4 class="job-title">DevOps Engineer</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Denver, CO</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-type">DevOps</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            
+            <!-- Job Card 8 -->
+            <div class="job-card">
+                <div class="company-logo" style="background-color: #e67e22; color: white;">SM</div>
+                <div class="job-content">
+                    <div class="company-info">
+                        <h3>SocialMedia Pro</h3>
+                        <p>Social Media Marketing</p>
+                    </div>
+                    <h4 class="job-title">Social Media Manager</h4>
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Miami, FL</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Remote</span>
+                        </div>
+                        <div class="job-type">Marketing</div>
+                    </div>
+                </div>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+        </div>
+        
+        <div class="browse-more">
+            <a href="#" class="browse-more-btn">Browse more jobs</a>
+        </div>
+    </div>
 </body>
 </html>

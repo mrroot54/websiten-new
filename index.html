@@ -1,653 +1,2918 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Listings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.4;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px 15px;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .section-header h2 {
-            font-size: 24px;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-        
-        .section-header p {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        .job-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .job-card {
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-        }
-        
-        .job-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
-        .company-logo {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-            color: #3498db;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        
-        .job-content {
-            flex-grow: 1;
-        }
-        
-        .company-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-        
-        .company-info h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-right: 8px;
-        }
-        
-        .company-info p {
-            font-size: 12px;
-            color: #7f8c8d;
-        }
-        
-        .job-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 6px;
-        }
-        
-        .job-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 6px;
-        }
-        
-        .job-detail {
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            color: #7f8c8d;
-        }
-        
-        .job-detail i {
-            margin-right: 4px;
-            color: #3498db;
-            font-size: 11px;
-        }
-        
-        .job-type {
-            display: inline-block;
-            padding: 2px 8px;
-            background-color: #e8f4fc;
-            color: #3498db;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-        
-        .apply-btn {
-            padding: 6px 14px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-left: 12px;
-            flex-shrink: 0;
-        }
-        
-        .apply-btn:hover {
-            background-color: #2980b9;
-        }
-        
-        .browse-more {
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        .browse-more-btn {
-            display: inline-block;
-            padding: 8px 20px;
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .browse-more-btn:hover {
-            background-color: #1a252f;
-        }
-        
-        /* Tablet and Small Desktop Responsive Styles */
-        @media (max-width: 768px) {
-            .container {
-                max-width: 100%;
-                padding: 20px 10px;
-            }
-            
-            .section-header h2 {
-                font-size: 22px;
-            }
-            
-            .section-header p {
-                font-size: 13px;
-            }
-            
-            .job-card {
-                padding: 15px;
-            }
-            
-            .company-logo {
-                width: 50px;
-                height: 50px;
-                font-size: 16px;
-            }
-            
-            .job-title {
-                font-size: 15px;
-            }
-            
-            .apply-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-        }
-        
-        /* Mobile Landscape and Small Tablets */
-        @media (max-width: 600px) {
-            .job-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 15px;
-            }
-            
-            .company-logo {
-                margin-right: 0;
-                margin-bottom: 12px;
-            }
-            
-            .apply-btn {
-                margin-left: 0;
-                margin-top: 12px;
-                width: 100%;
-                padding: 10px;
-            }
-            
-            .job-details {
-                justify-content: center;
-            }
-            
-            .company-info {
-                justify-content: center;
-            }
-        }
-        
-        /* Mobile Portrait */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px 8px;
-            }
-            
-            .section-header {
-                margin-bottom: 20px;
-            }
-            
-            .section-header h2 {
-                font-size: 20px;
-            }
-            
-            .section-header p {
-                font-size: 12px;
-            }
-            
-            .job-card {
-                padding: 12px 8px;
-                border-radius: 8px;
-            }
-            
-            .company-logo {
-                width: 45px;
-                height: 45px;
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            
-            .company-info {
-                flex-direction: column;
-                margin-bottom: 8px;
-            }
-            
-            .company-info h3 {
-                font-size: 14px;
-                margin-right: 0;
-                margin-bottom: 3px;
-            }
-            
-            .company-info p {
-                font-size: 12px;
-            }
-            
-            .job-title {
-                font-size: 15px;
-                margin-bottom: 8px;
-            }
-            
-            .job-details {
-                gap: 8px;
-                margin-bottom: 10px;
-                justify-content: center;
-            }
-            
-            .job-detail {
-                font-size: 11px;
-            }
-            
-            .job-detail i {
-                font-size: 10px;
-            }
-            
-            .job-type {
-                font-size: 10px;
-                padding: 2px 8px;
-            }
-            
-            .apply-btn {
-                padding: 10px;
-                font-size: 13px;
-                border-radius: 5px;
-            }
-            
-            .browse-more-btn {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-        }
-        
-        /* Small Mobile Devices */
-        @media (max-width: 360px) {
-            .container {
-                padding: 12px 6px;
-            }
-            
-            .section-header h2 {
-                font-size: 18px;
-            }
-            
-            .section-header p {
-                font-size: 11px;
-            }
-            
-            .job-card {
-                padding: 10px 6px;
-            }
-            
-            .company-logo {
-                width: 40px;
-                height: 40px;
-                font-size: 13px;
-            }
-            
-            .company-info h3 {
-                font-size: 13px;
-            }
-            
-            .company-info p {
-                font-size: 11px;
-            }
-            
-            .job-title {
-                font-size: 14px;
-            }
-            
-            .job-details {
-                gap: 6px;
-            }
-            
-            .job-detail {
-                font-size: 10px;
-            }
-            
-            .job-type {
-                font-size: 9px;
-                padding: 1px 6px;
-            }
-            
-            .apply-btn {
-                padding: 9px;
-                font-size: 12px;
-            }
-            
-            .browse-more-btn {
-                padding: 9px 18px;
-                font-size: 12px;
-            }
-        }
-        
-        /* Very Small Mobile Devices */
-        @media (max-width: 320px) {
-            .section-header h2 {
-                font-size: 17px;
-            }
-            
-            .company-logo {
-                width: 38px;
-                height: 38px;
-                font-size: 12px;
-            }
-            
-            .job-title {
-                font-size: 13px;
-            }
-            
-            .job-detail {
-                font-size: 9px;
-            }
-            
-            .job-type {
-                font-size: 8px;
-                padding: 1px 5px;
-            }
-            
-            .apply-btn {
-                padding: 8px;
-                font-size: 11px;
-            }
-            
-            .browse-more-btn {
-                padding: 8px 16px;
-                font-size: 11px;
-            }
-        }
-        
-        /* Touch-friendly adjustments */
-        @media (hover: none) and (pointer: coarse) {
-            .job-card:hover {
-                transform: none;
-            }
-            
-            .job-card:active {
-                transform: scale(0.98);
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            }
-            
-            .apply-btn:active {
-                background-color: #2980b9;
-                transform: scale(0.98);
-            }
-            
-            .browse-more-btn:active {
-                background-color: #1a252f;
-                transform: scale(0.98);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Portal</title>
+  <!-- ✅ Lottie Player CDN -->
+  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Modal Styles -->
+  <style>
+    /* Modal styles for success/error popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s;
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 60%;
+      max-width: 300px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: slideIn 0.4s;
+    }
+    
+    .modal-icon {
+      font-size: 60px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    
+    .error-icon {
+      color: #f44336;
+    }
+    
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .modal-message {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+    
+    .modal-close {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .modal-close:hover {
+      background-color: #45a049;
+    }
+    
+    .error-close {
+      background-color: #f44336;
+    }
+    
+    .error-close:hover {
+      background-color: #d32f2f;
+    }
+    
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    
+    @keyframes slideIn {
+      from {transform: translateY(-50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
+  
+  <!-- Modern Navbar Styles -->
+  <style>
+    /* Modern Navbar Styles */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      transition: transform 0.3s ease;
+    }
+    
+    /* Navbar hidden state when scrolling down */
+    .navbar.hidden {
+      transform: translateY(-100%);
+    }
+    
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 80px;
+    }
+    
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .navbar-logo img {
+      height: 45px;
+      margin-right: 12px;
+      transition: transform 0.3s ease;
+    }
+    
+    .navbar-logo:hover img {
+      transform: scale(1.05);
+    }
+    
+    .navbar-logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: -0.5px;
+    }
+    
+    .navbar-logo-text span {
+      color: #e74c3c;
+      font-weight: 800;
+    }
+    
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .navbar-menu li {
+      margin-left: 35px;
+      position: relative;
+    }
+    
+    .navbar-menu a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+    
+    .navbar-menu a:hover {
+      color: #e74c3c;
+    }
+    
+    .navbar-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background-color: #e74c3c;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+    
+    .navbar-menu a:hover::after {
+      width: 100%;
+    }
+    
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .navbar-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+    }
+    
+    .navbar-btn:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+    }
+    
+    .navbar-btn.outline {
+      background-color: transparent;
+      color: #e74c3c;
+      border: 2px solid #e74c3c;
+      box-shadow: none;
+    }
+    
+    .navbar-btn.outline:hover {
+      background-color: #e74c3c;
+      color: white;
+    }
+    
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .navbar-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: #333;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 992px) {
+      .navbar-container {
+        height: 70px;
+      }
+      
+      .navbar-menu li {
+        margin-left: 25px;
+      }
+      
+      .navbar-menu a {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar-container {
+        height: 60px;
+        padding: 0 15px;
+      }
+      
+      .navbar-logo img {
+        height: 35px;
+      }
+      
+      .navbar-logo-text {
+        font-size: 18px;
+      }
+      
+      .navbar-menu {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        flex-direction: column;
+        background-color: #fff;
+        width: 280px;
+        height: 100vh;
+        text-align: left;
+        transition: 0.3s;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        padding: 80px 0 0 0;
+        z-index: 999;
+      }
+      
+      .navbar-menu.active {
+        left: 0;
+      }
+      
+      .navbar-menu li {
+        margin: 0;
+        padding: 15px 25px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .navbar-menu a {
+        font-size: 16px;
+        display: block;
+      }
+      
+      .navbar-menu a::after {
+        display: none;
+      }
+      
+      .navbar-actions {
+        position: fixed;
+        bottom: 0;
+        left: -100%;
+        width: 280px;
+        flex-direction: column;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+        z-index: 999;
+      }
+      
+      .navbar-actions.active {
+        left: 0;
+      }
+      
+      .navbar-btn {
+        width: 100%;
+        margin: 5px 0;
+      }
+      
+      .navbar-toggle {
+        display: flex;
+      }
+      
+      .navbar-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+      
+      .navbar-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+      
+      /* Overlay for mobile menu */
+      .navbar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .navbar-overlay.active {
+        display: block;
+        opacity: 1;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .navbar-container {
+        padding: 0 10px;
+      }
+      
+      .navbar-logo-text {
+        font-size: 16px;
+      }
+      
+      .navbar-menu {
+        width: 250px;
+      }
+      
+      .navbar-actions {
+        width: 250px;
+      }
+    }
+  </style>
+  
+  <!-- All CSS from css/style.css with Hero section enhancements -->
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #222;
+      line-height: 1.5;
+    }
+    /* Container padding utility */
+    .container {
+      padding: 0 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      flex-wrap: wrap;
+      background-color: #FDE4E4;
+    }
+    .logo {
+      width: 100px;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      font-size: 14px;
+      -webkit-transition: background 0.3s ease;
+      -moz-transition: background 0.3s ease;
+      -o-transition: background 0.3s ease;
+      transition: background 0.3s ease;
+    }
+    .btn.red {
+      background-color: #ff3d3d;
+      color: white;
+    }
+    .btn.black {
+      background-color: black;
+      color: white;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    /* Top Background */
+    .top-bg-wrapper {
+      background-color: #FDE4E4;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content {
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .hero-content h1 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    .hero-content .highlight {
+      color: #ff3d3d;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero-content .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #ff3d3d;
+      transform: scaleX(0);
+      transform-origin: right;
+      animation: underline 1.5s ease-out forwards;
+    }
+    
+    @keyframes underline {
+      to {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+    
+    .hero-content p {
+      margin-bottom: 1rem;
+      font-size: 16px;
+      color: #070707;
+    }
+    /* Search Box */
+    .search-box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 6px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 0.8rem;
+      animation: bounceIn 1.2s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .search-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #ff3d3d, #ff6b6b, #ff3d3d);
+      background-size: 200% 100%;
+      animation: gradient 3s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 4px 6px;
+      background-color: #fff;
+      flex: 1;
+      transition: all 0.3s ease;
+    }
+    
+    .input-wrapper:focus-within {
+      border-color: #ff3d3d;
+      box-shadow: 0 0 0 2px rgba(255, 61, 61, 0.2);
+    }
+    
+    .input-icon {
+      margin-right: 6px;
+      color: #999;
+      font-size: 14px;
+    }
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      flex: 1;
+    }
+    .search-box button {
+      background-color: #ff3d3d;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      width: auto;
+      flex-shrink: 0;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .search-box button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .search-box button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .search-box button:hover {
+      background-color: #e60000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Mobile responsive search box */
+    @media (max-width: 768px) {
+      .search-box {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .search-box button {
+        width: 100%;
+      }
+      
+      .input-wrapper {
+        width: 100%;
+      }
+    }
+    
+    /* Popular Searches text css */
+    .popular {
+      font-size: 13px;
+      color: #333;
+      text-align: center;
+      margin-top: 0.8rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    /* Hero Right (Animation & Notification) */
+    .hero-right {
+      margin-top: 1.5rem;
+      text-align: center;
+      animation: fadeInRight 1.2s ease-out;
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .lottie-wrapper {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .lottie-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,61,61,0.1) 0%, rgba(255,61,61,0) 70%);
+      animation: pulse 2s infinite;
+      z-index: -1;
+    }
+    
+    /* Compact Stats Section */
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px 15px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      min-width: 90px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 61, 61, 0.1);
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #ff3d3d, #ff6b6b);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(255, 61, 61, 0.15);
+    }
+    
+    .stat-card:hover::before {
+      transform: translateX(0);
+    }
+    
+    .stat-icon {
+      font-size: 1.4rem;
+      color: #ff3d3d;
+      margin-bottom: 5px;
+    }
+    
+    .stat-number {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    /* Logo Slider Section */
+    .logo-slider {
+      background: #555;
+      color: white;
+      text-align: center;
+      padding: 25px 1rem;
+      font-size: 1rem;
+    }
+    /* Fixed Logo Slider Code */
+    @-webkit-keyframes scroll {
+      0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+      }
+      100% {
+        -webkit-transform: translateX(calc(-200px * 5));
+        transform: translateX(calc(-200px * 5));
+      }
+    }
+    @-moz-keyframes scroll {
+      0% {
+        -moz-transform: translateX(0);
+        transform: translateX(0);
+      }
+      100% {
+        -moz-transform: translateX(calc(-200px * 5));
+        transform: translateX(calc(-200px * 5));
+      }
+    }
+    @keyframes scroll {
+      0% {
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        transform: translateX(0);
+      }
+      100% {
+        -webkit-transform: translateX(calc(-200px * 5));
+        -moz-transform: translateX(calc(-200px * 5));
+        transform: translateX(calc(-200px * 5));
+      }
+    }
+    .slider {
+      height: auto;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      background: #fff;
+      padding: 20px 0;
+    }
+    .slide-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      -webkit-animation: scroll 30s linear infinite;
+      -moz-animation: scroll 30s linear infinite;
+      animation: scroll 30s linear infinite;
+    }
+    .slide {
+      flex: 0 0 auto;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      object-fit: contain;
+      -webkit-transition: transform 0.3s ease;
+      -moz-transition: transform 0.3s ease;
+      -o-transition: transform 0.3s ease;
+      transition: transform 0.3s ease;
+    }
+    .slide img:hover {
+      -webkit-transform: scale(1.05);
+      -moz-transform: scale(1.05);
+      -o-transform: scale(1.05);
+      transform: scale(1.05);
+    }
+    /* Responsive Layouts */
+    @media (max-width: 1024px) {
+      .slide {
+        width: 160px;
+      }
+      .slide img {
+        max-width: 140px;
+      }
+    }
+    @media (max-width: 768px) {
+      .slide {
+        width: 140px;
+      }
+      .slide img {
+        max-width: 120px;
+      }
+    }
+    @media (max-width: 480px) {
+      .slide {
+        width: 120px;
+      }
+      .slide img {
+        max-width: 100px;
+      }
+    }
+    /* Featured Job */
+    .featured-jobs {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .featured-jobs h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .featured-jobs p {
+      font-size: 1.1rem;
+      color: #777;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .job-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      -webkit-transition: box-shadow 0.3s ease;
+      -moz-transition: box-shadow 0.3s ease;
+      -o-transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease;
+    }
+    .job-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .job-card img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+    .job-info {
+      text-align: left;
+    }
+    .job-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .full-time {
+      background-color: rgb(98, 197, 0);
+      color: #ffffff;
+    }
+    .see-more-btn {
+      display: inline-block;
+      background-color: #ff0303;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      -webkit-transition: background 0.3s ease;
+      -moz-transition: background 0.3s ease;
+      -o-transition: background 0.3s ease;
+      transition: background 0.3s ease;
+    }
+    .see-more-btn:hover {
+      background-color: #333;
+    }
+    /* Responsive text scaling */
+    @media (max-width: 768px) {
+      .featured-jobs h2 {
+        font-size: 2rem;
+      }
+      .featured-jobs p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .featured-jobs h2 {
+        font-size: 1.5rem;
+      }
+      .featured-jobs p {
+        font-size: 0.95rem;
+      }
+      .job-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+      .job-info {
+        text-align: center;
+      }
+      .tags {
+        justify-content: center;
+      }
+    }
+    /* Testimonial */
+    .testimonial-wrapper {
+      background-color: #FFF2F2;
+      padding: 60px 20px;
+      margin: 80px 0;
+      width: 100%;
+    }
+    .testimonial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    /* Heading + Paragraph */
+    .testimonial-header h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .testimonial-header p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .testimonial-slider {
+      overflow: hidden;
+    }
+    .testimonial-track {
+      display: flex;
+      -webkit-transition: transform 1s ease;
+      -moz-transition: transform 1s ease;
+      -o-transition: transform 1s ease;
+      transition: transform 1s ease;
+    }
+    .testimonial {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 30px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .testimonial {
+        min-width: 50%;
+      }
+    }
+    @media (min-width: 1024px) {
+      .testimonial {
+        min-width: 33.33%;
+      }
+    }
+    .testimonial-box {
+      background-color: white;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+      display: inline-block;
+      max-width: 80%;
+    }
+    .testimonial-box::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -10px;
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-top-color: white;
+    }
+    .testimonial-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      position: relative;
+      padding: 10px 20px;
+    }
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: "❝";
+      font-size: 2rem;
+      color: rgb(251, 131, 151);
+      position: absolute;
+    }
+    .testimonial-text::after {
+      content: "❞";
+      bottom: -10px;
+      right: -20px;
+    }
+    .testimonial-text::before {
+      top: -10px;
+      left: -20px;
+    }
+    .profile {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .profile strong {
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: black;
+    }
+    .profile span {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+    @media (max-width: 600px) {
+      .testimonial-box {
+        max-width: 95%;
+      }
+      .testimonial-header h2 {
+        font-size: 1.6rem;
+      }
+      .testimonial-header p {
+        font-size: 0.95rem;
+      }
+    }
+    /* Resume Upload */
+    .xr-hero {
+      position: relative;
+      margin-top: 40px;
+      padding: 20px 15px;
+      min-height: 280px;
+      width: 100%;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e2a38);
+      background-size: 400% 400%;
+      -webkit-animation: xr-animatedBG 30s ease infinite;
+      -moz-animation: xr-animatedBG 30s ease infinite;
+      animation: xr-animatedBG 30s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    }
+    @-webkit-keyframes xr-animatedBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @-moz-keyframes xr-animatedBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes xr-animatedBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .xr-subtext, h1, .xr-upload-btn {
+      position: relative;
+      z-index: 1;
+    }
+    .xr-subtext {
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 16px;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    }
+    .xr-upload-btn {
+      background-color: #e60000;
+      color: white;
+      padding: 10px 22px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 0;
+      border: none;
+      -webkit-transition: background-color 0.3s ease;
+      -moz-transition: background-color 0.3s ease;
+      -o-transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease;
+    }
+    .xr-upload-btn:hover {
+      background-color: #cc0000;
+    }
+    .xr-icon {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      opacity: 0.07;
+      -webkit-animation: xr-floatIcon 10s linear infinite;
+      -moz-animation: xr-floatIcon 10s linear infinite;
+      animation: xr-floatIcon 10s linear infinite;
+      z-index: 0;
+    }
+    .xr-icon:nth-child(1) { top: 90%; left: 10%; -webkit-animation-delay: 0s; -moz-animation-delay: 0s; animation-delay: 0s; }
+    .xr-icon:nth-child(2) { top: 95%; left: 30%; -webkit-animation-delay: 2s; -moz-animation-delay: 2s; animation-delay: 2s; }
+    .xr-icon:nth-child(3) { top: 92%; left: 50%; -webkit-animation-delay: 4s; -moz-animation-delay: 4s; animation-delay: 4s; }
+    .xr-icon:nth-child(4) { top: 98%; left: 70%; -webkit-animation-delay: 6s; -moz-animation-delay: 6s; animation-delay: 6s; }
+    .xr-icon:nth-child(5) { top: 94%; left: 85%; -webkit-animation-delay: 8s; -moz-animation-delay: 8s; animation-delay: 8s; }
+    @-webkit-keyframes xr-floatIcon {
+      0% {
+        -webkit-transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1);
+        opacity: 0.1;
+      }
+      50% {
+        -webkit-transform: translateY(-160px) scale(1.2);
+        transform: translateY(-160px) scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        -webkit-transform: translateY(-320px) scale(0.9);
+        transform: translateY(-320px) scale(0.9);
+        opacity: 0;
+      }
+    }
+    @-moz-keyframes xr-floatIcon {
+      0% {
+        -moz-transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1);
+        opacity: 0.1;
+      }
+      50% {
+        -moz-transform: translateY(-160px) scale(1.2);
+        transform: translateY(-160px) scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        -moz-transform: translateY(-320px) scale(0.9);
+        transform: translateY(-320px) scale(0.9);
+        opacity: 0;
+      }
+    }
+    @keyframes xr-floatIcon {
+      0% {
+        -webkit-transform: translateY(0) scale(1);
+        -moz-transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1);
+        opacity: 0.1;
+      }
+      50% {
+        -webkit-transform: translateY(-160px) scale(1.2);
+        -moz-transform: translateY(-160px) scale(1.2);
+        transform: translateY(-160px) scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        -webkit-transform: translateY(-320px) scale(0.9);
+        -moz-transform: translateY(-320px) scale(0.9);
+        transform: translateY(-320px) scale(0.9);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 22px;
+      }
+      .xr-upload-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+      .xr-icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+      .xr-upload-btn {
+        font-size: 13px;
+        padding: 8px 18px;
+      }
+      .xr-hero {
+        padding: 15px 8px;
+      }
+    }
+    /* News Section */
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .job-slider-container p {
+      text-align: left;
+      margin-bottom: 30px;
+      color: #555;
+      font-size: 16px;
+    }
+    .job-slider-container {
+      overflow: hidden;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .job-slider-track {
+      display: flex;
+      gap: 20px;
+      -webkit-transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      -moz-transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      -o-transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .job-news-card {
+      min-width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    @media (min-width: 600px) {
+      .job-news-card {
+        min-width: 50%;
+      }
+    }
+    @media (min-width: 1024px) {
+      .job-news-card {
+        min-width: 33.33%;
+      }
+    }
+    .job-card-img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+    .job-card-content {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .job-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .job-card-desc {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
+      flex-grow: 1;
+      text-align: justify;
+    }
+    @media (max-width: 600px) {
+      .job-card-desc {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+    }
+    .job-read-btn {
+      margin-top: 15px;
+      text-decoration: none;
+      color: #fff;
+      background: #e74c3c;
+      padding: 10px;
+      border-radius: 6px;
+      display: inline-block;
+      text-align: center;
+      font-weight: bold;
+      -webkit-transition: background 0.3s ease;
+      -moz-transition: background 0.3s ease;
+      -o-transition: background 0.3s ease;
+      transition: background 0.3s ease;
+    }
+    .job-read-btn:hover {
+      background: #c0392b;
+    }
+    /* Recruiting */
+    .recruit-sec-wrapper {
+      width: 100%;
+      background: #fff1f1;
+      padding: 60px 5% 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .recruit-sec-text {
+      flex: 1;
+      padding-right: 20px;
+    }
+    .recruit-sec-title {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000;
+    }
+    .recruit-sec-desc {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .recruit-sec-button {
+      background-color: #f44336;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+    .recruit-sec-button:hover {
+      background-color: #c0392b;
+      -webkit-transform: translateY(-2px);
+      -moz-transform: translateY(-2px);
+      -o-transform: translateY(-2px);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .recruit-sec-img {
+      flex: 1;
+      max-width: 500px;
+    }
+    @media (max-width: 768px) {
+      .recruit-sec-wrapper {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+      
+      .recruit-sec-text {
+        padding: 0;
+        margin-bottom: 30px;
+      }
+      
+      .recruit-sec-img {
+        max-width: 100%;
+      }
+    }
+    /* Contact Us */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Nunito', sans-serif;
+    }
+    .contact_us_8 {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .form-box {
+      display: flex;
+      flex-direction: row;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      max-width: 1000px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .form-left, .form-right {
+      padding: 40px;
+      flex: 1;
+    }
+    .form-left {
+      background-color: white;
+    }
+    .form-right {
+      background-color: rgba(151, 220, 250, 0.44);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .form-right .text-blk {
+      margin-bottom: 20px;
+    }
+    .form-right .contactus-head {
+      font-size: 32px;
+      font-weight: 800;
+    }
+    .form-right .contactus-subhead {
+      font-size: 16px;
+      color: #333;
+      max-width: 300px;
+    }
+    .social-media-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .social-media-links img {
+      width: 24px;
+      height: 24px;
+    }
+    input, textarea {
+      width: 100%;
+      border: 2px solid #eee;
+      border-radius: 64px;
+      padding: 12px 18px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    textarea {
+      border-radius: 20px;
+      min-height: 120px;
+      resize: vertical;
+    }
+    input::placeholder,
+    textarea::placeholder {
+      color: #444;
+      font-weight: 500;
+    }
+    .submit-btn {
+      width: 100%;
+      background-color: red;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      padding: 14px;
+      border-radius: 64px;
+      cursor: pointer;
+      -webkit-transition: background 0.3s;
+      -moz-transition: background 0.3s;
+      -o-transition: background 0.3s;
+      transition: background 0.3s;
+    }
+    .submit-btn:hover {
+      background-color: darkred;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .checkbox-group input {
+      width: auto;
+      margin-right: 10px;
+    }
+    .checkbox-text {
+      color: #555;
+      font-size: 14px;
+    }
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      .form-box {
+        flex-direction: column;
+      }
+      .form-left,
+      .form-right {
+        padding: 20px;
+      }
+      .form-right .contactus-head {
+        font-size: 26px;
+      }
+      .form-right .contactus-subhead {
+        max-width: 100%;
+      }
+    }
+    /* Modern Footer */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    .modern-footer {
+      font-family: 'Poppins', sans-serif;
+      background-color: #000000;
+      color: #e0e0e0;
+      padding: 0;
+      width: 100%;
+      line-height: 1.6;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 20px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .footer-brand h2 {
+      font-size: clamp(22px, 4vw, 28px);
+      color: #ffffff;
+      margin: 0 0 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .footer-brand h2 span {
+      color: #ff0000;
+    }
+    .footer-tagline {
+      font-size: clamp(14px, 2.5vw, 16px);
+      color: #aaaaaa;
+      margin: 0 0 5px;
+      font-weight: 400;
+    }
+    .company-info, .cin-info {
+      font-size: clamp(11px, 2vw, 13px);
+      color: #888888;
+      margin: 0;
+      font-weight: 400;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: space-around;
+    }
+    .link-column {
+      flex: 1;
+      min-width: 150px;
+    }
+    .link-column h3 {
+      color: #ff0000;
+      font-size: clamp(16px, 2.8vw, 18px);
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 8px;
+      font-weight: 600;
+    }
+    .link-column h3:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background-color: #ff0000;
+    }
+    .link-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .link-column ul li {
+      margin-bottom: 10px;
+    }
+    .link-column ul li a {
+      color: #cccccc;
+      text-decoration: none;
+      font-size: clamp(13px, 2.5vw, 15px);
+      -webkit-transition: color 0.3s ease;
+      -moz-transition: color 0.3s ease;
+      -o-transition: color 0.3s ease;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    .link-column ul li a:hover {
+      color: #ff0000;
+    }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-contact h3 {
+      color: #ff0000;
+      font-size: clamp(16px, 2.8vw, 18px);
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 8px;
+      font-weight: 600;
+    }
+    .footer-contact h3:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background-color: #ff0000;
+    }
+    .footer-contact ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+    }
+    .footer-contact ul li {
+      margin-bottom: 12px;
+      font-size: clamp(13px, 2.5vw, 15px);
+      display: flex;
+      align-items: flex-start;
+      font-weight: 400;
+    }
+    .footer-contact ul li i {
+      color: #ff0000;
+      margin-right: 10px;
+      font-size: clamp(14px, 2.5vw, 16px);
+      margin-top: 3px;
+      min-width: 16px;
+    }
+    .footer-contact ul li a {
+      color: #cccccc;
+      text-decoration: none;
+      -webkit-transition: color 0.3s ease;
+      -moz-transition: color 0.3s ease;
+      -o-transition: color 0.3s ease;
+      transition: color 0.3s ease;
+    }
+    .footer-contact ul li a:hover {
+      color: #ffffff;
+    }
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      border-radius: 50%;
+      color: #ff0000;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+    .social-icons a:hover {
+      background-color: #ff0000;
+      color: #ffffff;
+      -webkit-transform: translateY(-3px);
+      -moz-transform: translateY(-3px);
+      -o-transform: translateY(-3px);
+      transform: translateY(-3px);
+    }
+    .footer-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 0, 0, 0.5), transparent);
+      margin: 20px 0;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+    }
+    .footer-copyright {
+      flex: 2;
+    }
+    .footer-copyright p {
+      margin: 0;
+      font-size: clamp(12px, 2.2vw, 14px);
+      color: #aaaaaa;
+      font-weight: 400;
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 15px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+    .footer-bottom-links a {
+      color: #aaaaaa;
+      text-decoration: none;
+      font-size: clamp(12px, 2.2vw, 14px);
+      -webkit-transition: color 0.3s ease;
+      -moz-transition: color 0.3s ease;
+      -o-transition: color 0.3s ease;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    .footer-bottom-links a:hover {
+      color: #ff0000;
+    }
+    /* Media Queries */
+    @media (max-width: 992px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      
+      .footer-contact {
+        grid-column: 1 / -1;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .footer-contact h3:after {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+      
+      .footer-contact ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    @media (max-width: 768px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .footer-brand, .footer-links, .footer-contact {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .footer-brand {
+        order: 1;
+      }
+      
+      .footer-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-around;
+      }
+      
+      .footer-contact {
+        order: 2;
+      }
+      
+      .link-column h3:after {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+      
+      .footer-bottom-links {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 480px) {
+      .footer-container {
+        padding: 30px 15px 15px;
+      }
+      
+      .social-icons a {
+        width: 32px;
+        height: 32px;
+      }
+      
+      .link-column {
+        min-width: 120px;
+      }
+    }
+    /* DESKTOP RESPONSIVE (768px+) */
+    @media (min-width: 768px) {
+      header {
+        flex-wrap: nowrap;
+      }
+      .header-buttons {
+        margin-top: 0;
+      }
+      .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2rem;
+      }
+      .hero-content {
+        flex: 1;
+        text-align: left;
+        padding-right: 2rem;
+      }
+      .search-box {
+        flex-direction: row;
+        align-items: center;
+      }
+      .search-box button {
+        width: auto;
+      }
+      .hero-right {
+        flex: 1;
+        margin-top: 0;
+        position: relative;
+      }
+      .lottie-wrapper {
+        position: relative;
+        top: -50px;
+        left: 0;
+        max-width: 320px;
+      }
+      .notification.email {
+        position: absolute;
+        top: 200px;
+        right: 20px;
+      }
+      .popular {
+        text-align: left;
+      }
+      .logo-slider {
+        font-size: 1.2rem;
+      }
+      
+      .stats-container {
+        margin: 1.5rem 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="section-header">
-            <h2>Latest Job Listings</h2>
-            <p>Discover your next career opportunity</p>
-        </div>
-        
-        <div class="job-list">
-            <!-- Job Card 1 -->
-            <div class="job-card">
-                <div class="company-logo">TC</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>TechCorp</h3>
-                        <p>Technology Company</p>
-                    </div>
-                    <h4 class="job-title">Senior Frontend Developer</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>San Francisco, CA</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">Technology</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 2 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #e74c3c; color: white;">MD</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>MarketDirect</h3>
-                        <p>Marketing Agency</p>
-                    </div>
-                    <h4 class="job-title">Digital Marketing Manager</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>New York, NY</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">Marketing</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 3 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #2ecc71; color: white;">FS</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>FinServe</h3>
-                        <p>Financial Services</p>
-                    </div>
-                    <h4 class="job-title">Financial Analyst</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Chicago, IL</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">Finance</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 4 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #9b59b6; color: white;">DH</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>DataHub</h3>
-                        <p>Data Analytics</p>
-                    </div>
-                    <h4 class="job-title">Data Scientist</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Austin, TX</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">Data Science</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 5 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #f39c12; color: white;">ED</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>EduDesign</h3>
-                        <p>Educational Technology</p>
-                    </div>
-                    <h4 class="job-title">UX/UI Designer</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Seattle, WA</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Part-time</span>
-                        </div>
-                        <div class="job-type">Design</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 6 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #1abc9c; color: white;">HC</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>HealthCare Plus</h3>
-                        <p>Healthcare Services</p>
-                    </div>
-                    <h4 class="job-title">Registered Nurse</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Boston, MA</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">Healthcare</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 7 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #34495e; color: white;">CL</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>CloudLogix</h3>
-                        <p>Cloud Services</p>
-                    </div>
-                    <h4 class="job-title">DevOps Engineer</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Denver, CO</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="job-type">DevOps</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            
-            <!-- Job Card 8 -->
-            <div class="job-card">
-                <div class="company-logo" style="background-color: #e67e22; color: white;">SM</div>
-                <div class="job-content">
-                    <div class="company-info">
-                        <h3>SocialMedia Pro</h3>
-                        <p>Social Media Marketing</p>
-                    </div>
-                    <h4 class="job-title">Social Media Manager</h4>
-                    <div class="job-details">
-                        <div class="job-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Miami, FL</span>
-                        </div>
-                        <div class="job-detail">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Remote</span>
-                        </div>
-                        <div class="job-type">Marketing</div>
-                    </div>
-                </div>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-        </div>
-        
-        <div class="browse-more">
-            <a href="#" class="browse-more-btn">Browse more jobs</a>
-        </div>
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <div class="navbar-logo">
+        <img src="logo2.png" alt="Xitaminnakuri Logo" />
+        <div class="navbar-logo-text">XITAMIN<span>NAUKRI</span></div>
+      </div>
+      
+      <ul class="navbar-menu" id="navbar-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#jobs">Jobs</a></li>
+        <li><a href="#companies">Companies</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      
+      <div class="navbar-actions" id="navbar-actions">
+        <button class="navbar-btn outline" onclick="window.location.href='view-jobs/JobPortal.php'">Find Jobs</button>
+        <button class="navbar-btn" onclick="window.location.href='recruit/index.html'">Post Jobs</button>
+      </div>
+      
+      <div class="navbar-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="navbar-overlay" id="navbar-overlay"></div>
+  </nav>
+  
+  <!-- ✅ Wrapper for top colored section -->
+  <div class="top-bg-wrapper" id="home">
+    <header>
+      <img src="logo2.png" alt="Xitaminnakuri Logo" class="logo" />
+      <div class="header-buttons">
+        <a href="resume-form.html">
+          <!-- <button class="btn black">Create Your Resume</button> -->
+        </a>
+        <!-- View Job button removed as requested -->
+      </div>
+    </header>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>There Are <span class="highlight">1000</span> Postings Here For you!</h1>
+        <!-- <p>Find Jobs, Employment & Career Opportunities</p> -->
+        
+        <div class="search-box">
+          <div class="input-wrapper">
+            <i class="fas fa-search input-icon"></i>
+            <input type="text" placeholder="Job title" />
+          </div>
+          <div class="input-wrapper">
+            <i class="fas fa-location-dot input-icon"></i>
+            <input type="text" placeholder="Location" />
+          </div>
+          <a href="view-jobs/JobPortal.php">
+            <button>Find Jobs</button>
+          </a>
+        </div>
+        
+        <!-- Compact Stats Section -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Jobs</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Companies</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Candidates</div>
+          </div>
+        </div>
+        
+        <p class="popular">
+          <strong>Popular Searches :</strong> Designer, Developer, Web, IOS, PHP, Senior, Engineer
+        </p>
+      </div>
+      <!-- ✅ Right Side Hero Animation + Notification -->
+      <div class="hero-right">
+        
+        <!-- ✅ Job Search Lottie Animation -->
+        <div class="lottie-wrapper">
+          <dotlottie-wc
+            src="https://lottie.host/f1780225-acae-459f-ae30-e07475521453/St3k5tZhmg.lottie"
+            style="width: 300px; height: 300px;"
+            speed="1"
+            autoplay
+            loop>
+          </dotlottie-wc>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!---------------------------- partner companies  Logos ------------------------------------------ -->
+  <div class="slider" id="companies">
+    <div class="slide-track">
+      <div class="slide"><img src="company-logo/logo1.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo2.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo3.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo4.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo5.png" alt=""></div>
+      <!-- Duplicate for looping -->
+      <div class="slide"><img src="company-logo/logo1.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo2.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo3.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo4.png" alt=""></div>
+      <div class="slide"><img src="company-logo/logo5.png" alt=""></div>
+    </div>
+  </div>
+  <br><br><br><br>
+  <!--------------------------------- Featured Tab  -------------------------------------->
+  <section class="featured-jobs" id="jobs">
+    <h2>Featured Jobs</h2>
+    <p style="text-align: center;">Know your worth and find the job that qualifies your life</p>
+    <div class="job-grid">
+      <!-- Job Card 1 - Graphic Designer -->
+      <a href="#" class="job-card">
+        <img src="img/job/graphic-designer.png" alt="Company Logo" />
+        <div class="job-info">
+          <div class="job-title">Graphic Designer </div>
+          <div class="tags">
+            <span class="tag full-time">Full Time</span>
+          </div>
+        </div>
+      </a>
+      <!-- Job Card 2 - Accountant -->
+      <a href="#" class="job-card">
+        <img src="img/job/account.png" alt="Company Logo" />
+        <div class="job-info">
+          <div class="job-title">Accountant</div>
+          <div class="tags">
+            <span class="tag full-time">Full Time</span>
+          </div>
+        </div>
+      </a>
+      <!-- Job Card 3 - Tax Operator -->
+      <a href="#" class="job-card">
+        <img src="img/job/taxes.png" alt="Company Logo" />
+        <div class="job-info">
+          <div class="job-title">Tax Operator</div>
+          <div class="tags">
+            <span class="tag full-time">Full Time</span>
+          </div>
+        </div>
+      </a>
+      <!-- Job Card 4 - Security Guard -->
+      <a href="#" class="job-card">
+        <img src="img/job/guard.png" alt="Company Logo" />
+        <div class="job-info">
+          <div class="job-title">Security Guard</div>
+          <div class="tags">
+            <span class="tag full-time">Full Time</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- See More Button -->
+    <a class="see-more-btn" href="view-jobs/JobPortal.php" target="_blank">See More Job</a>
+  </section>
+  <!-- ✅ Final Wrapper with full background -->
+  
+  <div class="testimonial-wrapper">
+    <div class="testimonial-container">
+      
+      <!-- ✅ New Heading and Paragraph -->
+      <div class="testimonial-header">
+        <h2>Testimonials From Our Customers</h2>
+        <p style="text-align: center;"> Stories That Shine.</p>
+      </div>
+      <div class="testimonial-slider">
+        <div class="testimonial-track" id="testimonialTrack">
+          <!-- 1 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                I found a graphic designer job fast. Great support and smooth experience!              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="User">
+              <strong>Rohit kumar</strong>
+            </div>
+          </div>
+          <!-- 2 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                This site helped me get an accountant job. Quick and very easy process!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="User">
+              <strong>Atul Singh </strong>
+            </div>
+          </div>
+          <!-- 3 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                Applied here and became a tax operator. Trusted and useful platform!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
+              <strong> Priya Sinha</strong>
+            </div>
+          </div>
+          <!-- 4 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                Got hired as a graphic designer within days. Really helped me a lot!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="User">
+              <strong>Neha Joshi</strong>
+            </div>
+          </div>
+          <!-- 5 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                I secured my accountant role fast. Super reliable and easy-to-use site!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="User">
+              <strong>Rahul Singh</strong>
+            </div>
+          </div>
+          <!-- 6 -->
+          <div class="testimonial">
+            <div class="testimonial-box">
+              <div class="testimonial-text">
+                Found a tax operator job in no time. Great tool for job searching here!
+              </div>
+            </div>
+            <div class="profile">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+              <strong>Anjali Singh</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------------------------ Heading Line  ----------------------------------- -->
+  <div style="text-align: center;">
+    <h2 class="featured-jobs" id="services">TOP CAREER PACKAGES</h2>
+  </div>
+  <!--------------------------Resume Upload -------------------------------- -->
+  <div class="xr-hero">
+    <!-- Floating icons -->
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <svg class="xr-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6 2a2 2 0 0 0-2 2v16c0 1.103.897 2 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/>
+    </svg>
+    <!-- Text and file upload form -->
+    <h1>Stand Out with a Resume That<br>Speaks for You!</h1>
+    <form action="upload_resume.php" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
+      <input type="file" name="resume" accept=".pdf,.doc,.docx" required style="padding: 8px; font-size: 16px;">
+      <br><br>
+      <button type="submit" class="xr-upload-btn">UPLOAD YOUR CV</button>
+    </form>
+  </div>
+  <br><br>
+  <div class="container">
+    <div class="section-header">
+      <h1>Latest Job Listings</h1>
+      <p>Discover your next career opportunity</p>
+    </div>
+    
+    <div class="job-list">
+      <!-- Job Card 1 -->
+      <div class="job-card">
+        <div class="company-logo">TC</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>TechCorp</h3>
+            <p>Technology Company</p>
+          </div>
+          <h4 class="job-title">Senior Frontend Developer</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>San Francisco, CA</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">Technology</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 2 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #e74c3c; color: white;">MD</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>MarketDirect</h3>
+            <p>Marketing Agency</p>
+          </div>
+          <h4 class="job-title">Digital Marketing Manager</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>New York, NY</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">Marketing</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 3 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #2ecc71; color: white;">FS</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>FinServe</h3>
+            <p>Financial Services</p>
+          </div>
+          <h4 class="job-title">Financial Analyst</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Chicago, IL</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">Finance</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 4 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #9b59b6; color: white;">DH</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>DataHub</h3>
+            <p>Data Analytics</p>
+          </div>
+          <h4 class="job-title">Data Scientist</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Austin, TX</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">Data Science</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 5 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #f39c12; color: white;">ED</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>EduDesign</h3>
+            <p>Educational Technology</p>
+          </div>
+          <h4 class="job-title">UX/UI Designer</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Seattle, WA</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Part-time</span>
+            </div>
+            <div class="job-type">Design</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 6 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #1abc9c; color: white;">HC</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>HealthCare Plus</h3>
+            <p>Healthcare Services</p>
+          </div>
+          <h4 class="job-title">Registered Nurse</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Boston, MA</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">Healthcare</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 7 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #34495e; color: white;">CL</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>CloudLogix</h3>
+            <p>Cloud Services</p>
+          </div>
+          <h4 class="job-title">DevOps Engineer</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Denver, CO</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Full-time</span>
+            </div>
+            <div class="job-type">DevOps</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+      
+      <!-- Job Card 8 -->
+      <div class="job-card">
+        <div class="company-logo" style="background-color: #e67e22; color: white;">SM</div>
+        <div class="job-content">
+          <div class="company-info">
+            <h3>SocialMedia Pro</h3>
+            <p>Social Media Marketing</p>
+          </div>
+          <h4 class="job-title">Social Media Manager</h4>
+          <div class="job-details">
+            <div class="job-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Miami, FL</span>
+            </div>
+            <div class="job-detail">
+              <i class="fas fa-briefcase"></i>
+              <span>Remote</span>
+            </div>
+            <div class="job-type">Marketing</div>
+          </div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+    
+    <div class="browse-more">
+      <a href="view-jobs/JobPortal.php" class="browse-more-btn">Browse more jobs</a>
+    </div>
+  </div>
+  <br> <br> 
+  
+  <!-----------------------------  News Section ------------------------------------------------------------- -->
+  <h2 id="blog">Latest blog by xitaminnaukri.com </h2>
+  <div class="job-slider-container">
+    <div class="job-slider-track" id="sliderTrack">
+      <!-- CARD 1 -->
+      <div class="job-news-card">
+        <img src="img/news/Graphic.jpg" class="job-card-img" alt="Graphic Designer">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Graphic Designer</h3>
+          <p class="job-card-desc">Join our creative design team at Xitamin. Work with Adobe, Figma & more.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+      <!-- CARD 2 -->
+      <div class="job-news-card">
+        <img src="img/news/Accountant.jpg" class="job-card-img" alt="Accountant">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Accountant</h3>
+          <p class="job-card-desc">We're hiring skilled accountants with Tally, GST, and Excel knowledge.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+      <!-- CARD 3 -->
+      <div class="job-news-card">
+        <img src="img/job/taxes.png" class="job-card-img" alt="Tax Operator">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Tax Operator</h3>
+          <p class="job-card-desc">Apply for tax filing & return jobs at Xitamin. TDS & ITR knowledge required.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+      <!-- CARD 4 -->
+      <div class="job-news-card">
+        <img src="img/news/Security .jpg" class="job-card-img" alt="Security Guard">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Security Guard</h3>
+          <p class="job-card-desc">We're hiring security guards for residential and commercial buildings.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+      <!-- CARD 5 -->
+      <div class="job-news-card">
+        <img src="img/news/Office.jpg" class="job-card-img" alt="Office Assistant">
+        <div class="job-card-content">
+          <h3 class="job-card-title">Office Assistant</h3>
+          <p class="job-card-desc">Join our team as a full-time office assistant. Basic computer skills needed.</p>
+          <a href="#" class="job-read-btn">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br><br>
+  <h2> Recruiting Platform for Job Providers </h2>
+  <br>
+  <!---------------------------------------- Recruiting ------------------------------------------------->
+  
+  <section class="recruit-sec-wrapper">
+    <!-- TEXT -->
+    <div class="recruit-sec-text">
+      <h1 class="recruit-sec-title">Recruiting?</h1>
+      <h4 class="recruit-sec-desc">Advertise your jobs to millions of monthly users and search 15.8 million CVs in our database.</h4>
+      <a href="recruit/index.html" class="recruit-sec-button">Start Recruiting Now</a>
+    </div>
+    <!-- ANIMATED HIRING ILLUSTRATION -->
+    <div class="recruit-sec-img">
+      <dotlottie-wc
+        src="https://assets5.lottiefiles.com/packages/lf20_V9t630.json"      style="width: 100%; height: 300px;"
+        speed="1"
+        autoplay
+        loop>
+      </dotlottie-wc>
+    </div>
+  </section>
+  <br><br><br>
+  <!------------------------------------ Contact US --------------------------------------------------->
+  <h2 id="contact">📞 Contact Us</h2>
+  <p style="text-align: center;">We're here to help with your questions, feedback, or ideas.</p>
+  
+  <div class="contact_us_8">
+    <form class="form-box" action="contact.php" method="post">
+      
+      <!-- Left Form Section -->
+      <div class="form-left">
+        <input type="text" name="FirstName" placeholder="First Name" required>
+        <input type="text" name="LastName" placeholder="Last Name" required>
+        <input type="email" name="Email" placeholder="Email" required>
+        <input type="tel" name="PhoneNumber" placeholder="Phone Number" required>
+        <textarea name="Message" placeholder="What's on your mind?" required></textarea>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="agree" name="agree" value="1" required>
+          <label class="checkbox-text" for="agree">I agree to the privacy policy.</label>
+        </div>
+        
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+      <!-- Right Info Section -->
+      <div class="form-right">
+        <p class="text-blk contactus-head">Contact Us</p>
+        <p class="text-blk contactus-subhead">
+          <span id="typewriter-text"></span>
+        </p>
+        
+        <div class="social-media-links">
+          
+          <a href="https://www.facebook.com/share/1DXLyPm2o4/"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/xitamin.naukri?igsh=bmMwMTVjdHNuNmlt"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png" alt="Instagram"></a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br><br><br>
+  <!------------------------------Footer Starting  Here  ------------------>
+  <!-- ✅ Footer Starts Here -->
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <!-- Top Section -->
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h2>XITAMIN<span>NAUKRI.COM</span></h2>
+          <p class="footer-tagline">Your Career Partner</p>
+          <p class="company-info">An unit of Xitamin Solution Pvt. Ltd.</p>
+          <p class="cin-info">CIN: U93090BR2018PTC039359</p>
+        </div>
+        
+        <div class="footer-links">
+          <div class="link-column">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#jobs">Jobs</a></li>
+              <li><a href="#companies">Companies</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          
+          <div class="link-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#blog">Blog</a></li>
+              <li><a href="#">Career Tips</a></li>
+              <li><a href="#">Resume Builder</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-contact">
+          <h3>Get In Touch</h3>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> Patna, Bihar</li>
+            <li><i class="fas fa-envelope"></i> <a href="mailto:enquiry@xitaminnaukri.com">enquiry@xitaminnaukri.com</a></li>
+            <li><i class="fas fa-phone"></i> <a href="tel:+919471092854">+91 9471092854</a></li>
+          </ul>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/share/1DXLyPm2o4/"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/xitamin.naukri?igsh=bmMwMTVjdHNuNmlt"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/xitamin-naukri/"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Divider -->
+      <div class="footer-divider"></div>
+      
+      <!-- Bottom Section -->
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          <p>&copy; 2018–2025 Xitamin Naukri. All Rights Reserved.</p>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Contact Form Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon">✓</div>
+      <div class="modal-title">Message Submitted Successfully!</div>
+      <div class="modal-message">Thank you for contacting us. We have received your message and will get back to you shortly.</div>
+      <button class="modal-close" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+  <!-- Contact Form Error Modal -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon error-icon">✕</div>
+      <div class="modal-title">Submission Error</div>
+      <div class="modal-message">There was an error submitting your message. Please try again later.</div>
+      <button class="modal-close error-close" onclick="closeErrorModal()">OK</button>
+    </div>
+  </div>
+  <!-- Resume Upload Success Modal -->
+  <div id="resumeSuccessModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon">✓</div>
+      <div class="modal-title">Resume Uploaded Successfully!</div>
+      <div class="modal-message">Thank you for uploading your resume. We have received it and will review it shortly.</div>
+      <button class="modal-close" onclick="closeResumeSuccessModal()">OK</button>
+    </div>
+  </div>
+  <!-- Resume Upload Error Modal -->
+  <div id="resumeErrorModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon error-icon">✕</div>
+      <div class="modal-title">Resume Upload Error</div>
+      <div class="modal-message" id="resumeErrorMessage">There was an error uploading your resume. Please try again.</div>
+      <button class="modal-close error-close" onclick="closeResumeErrorModal()">OK</button>
+    </div>
+  </div>
+  <script>
+    const track = document.getElementById("sliderTrack");
+    let index = 0;
+    function autoSlide() {
+      const cards = document.querySelectorAll(".job-news-card");
+      const cardWidth = cards[0].offsetWidth + 20;
+      const total = cards.length;
+      const visible = getVisibleCount();
+      index++;
+      if (index > total - visible) index = 0;
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+    function getVisibleCount() {
+      const width = window.innerWidth;
+      if (width >= 1024) return 3;
+      if (width >= 600) return 2;
+      return 1;
+    }
+    setInterval(autoSlide, 3000);
+    window.addEventListener('resize', () => {
+      index = 0;
+      track.style.transform = `translateX(0px)`;
+    });
+  </script>
+  <!-- 🔁 JavaScript -->
+  <script>
+    const track = document.getElementById('testimonialTrack');
+    const slides = document.querySelectorAll('.testimonial');
+    let currentIndex = 0;
+    function getVisibleSlides() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+    function moveToNextSlide() {
+      const visibleSlides = getVisibleSlides();
+      const totalSlides = slides.length;
+      const maxIndex = totalSlides - visibleSlides;
+      currentIndex = (currentIndex + 1) > maxIndex ? 0 : currentIndex + 1;
+      const movePercent = currentIndex * (100 / visibleSlides);
+      track.style.transform = `translateX(-${movePercent}%)`;
+    }
+    setInterval(moveToNextSlide, 5000);
+    window.addEventListener("resize", () => {
+      currentIndex = 0;
+      track.style.transform = "translateX(0%)";
+    });
+  </script>
+  <script>
+    function uploadCV() {
+      alert("Upload functionality is not implemented yet.");
+    }
+  </script>
+  
+  <!-- Navbar JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navbarMenu = document.getElementById('navbar-menu');
+      const navbarActions = document.getElementById('navbar-actions');
+      const navbarOverlay = document.getElementById('navbar-overlay');
+      
+      mobileMenu.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        navbarMenu.classList.toggle('active');
+        navbarActions.classList.toggle('active');
+        navbarOverlay.classList.toggle('active');
+      });
+      
+      // Close menu when clicking on overlay
+      navbarOverlay.addEventListener('click', function() {
+        mobileMenu.classList.remove('active');
+        navbarMenu.classList.remove('active');
+        navbarActions.classList.remove('active');
+        navbarOverlay.classList.remove('active');
+      });
+      
+      // Close menu when clicking on a link
+      const menuLinks = document.querySelectorAll('.navbar-menu a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          navbarMenu.classList.remove('active');
+          navbarActions.classList.remove('active');
+          navbarOverlay.classList.remove('active');
+        });
+      });
+    });
+  </script>
+  
+  <!-- Navbar scroll effect JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbar = document.getElementById('navbar');
+      let lastScrollTop = 0;
+      
+      window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // If user scrolled down and is past the navbar height
+        if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+          // Scrolling down
+          navbar.classList.add('hidden');
+        } else {
+          // Scrolling up
+          navbar.classList.remove('hidden');
+        }
+        
+        // Update last scroll position
+        lastScrollTop = scrollTop;
+      });
+    });
+  </script>
+  
+  <!-- Modal JavaScript -->
+  <script>
+    // Function to show contact success modal
+    function showModal() {
+      document.getElementById("successModal").style.display = "block";
+    }
+    
+    // Function to close contact success modal
+    function closeModal() {
+      document.getElementById("successModal").style.display = "none";
+    }
+    
+    // Function to show contact error modal
+    function showErrorModal() {
+      document.getElementById("errorModal").style.display = "block";
+    }
+    
+    // Function to close contact error modal
+    function closeErrorModal() {
+      document.getElementById("errorModal").style.display = "none";
+    }
+    
+    // Function to show resume success modal
+    function showResumeSuccessModal() {
+      document.getElementById("resumeSuccessModal").style.display = "block";
+    }
+    
+    // Function to close resume success modal
+    function closeResumeSuccessModal() {
+      document.getElementById("resumeSuccessModal").style.display = "none";
+    }
+    
+    // Function to show resume error modal
+    function showResumeErrorModal(message) {
+      document.getElementById("resumeErrorMessage").innerText = message;
+      document.getElementById("resumeErrorModal").style.display = "block";
+    }
+    
+    // Function to close resume error modal
+    function closeResumeErrorModal() {
+      document.getElementById("resumeErrorModal").style.display = "none";
+    }
+    
+    // Check URL parameters when page loads
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Check for contact form success/error
+      if (urlParams.get('success') === '1') {
+        showModal();
+        // Remove the success parameter from URL without reloading the page
+        const newUrl = window.location.pathname;
+        window.history.pushState({}, document.title, newUrl);
+      }
+      
+      if (urlParams.get('error') === '1') {
+        showErrorModal();
+        // Remove the error parameter from URL without reloading the page
+        const newUrl = window.location.pathname;
+        window.history.pushState({}, document.title, newUrl);
+      }
+      
+      // Check for resume upload success/error
+      if (urlParams.get('resume_success') === '1') {
+        showResumeSuccessModal();
+        // Remove the success parameter from URL without reloading the page
+        const newUrl = window.location.pathname;
+        window.history.pushState({}, document.title, newUrl);
+      }
+      
+      if (urlParams.get('resume_error')) {
+        const errorCode = urlParams.get('resume_error');
+        let errorMessage = "There was an error uploading your resume. Please try again.";
+        
+        switch(errorCode) {
+          case '1':
+            errorMessage = "Error: Only PDF, DOC, and DOCX files are allowed.";
+            break;
+          case '2':
+            errorMessage = "Error: File size must be less than 5MB.";
+            break;
+          case '3':
+            errorMessage = "Database error: Failed to save resume information.";
+            break;
+          case '4':
+            errorMessage = "Error uploading your file. Please try again.";
+            break;
+          case '5':
+            errorMessage = "No file uploaded or upload error.";
+            break;
+        }
+        
+        showResumeErrorModal(errorMessage);
+        // Remove the error parameter from URL without reloading the page
+        const newUrl = window.location.pathname;
+        window.history.pushState({}, document.title, newUrl);
+      }
+    };
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const successModal = document.getElementById("successModal");
+      const errorModal = document.getElementById("errorModal");
+      const resumeSuccessModal = document.getElementById("resumeSuccessModal");
+      const resumeErrorModal = document.getElementById("resumeErrorModal");
+      
+      if (event.target == successModal) {
+        closeModal();
+      }
+      
+      if (event.target == errorModal) {
+        closeErrorModal();
+      }
+      
+      if (event.target == resumeSuccessModal) {
+        closeResumeSuccessModal();
+      }
+      
+      if (event.target == resumeErrorModal) {
+        closeResumeErrorModal();
+      }
+    }
+  </script>
+  
+  <!-- Typewriter effect for the contact text -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const text = "Have a question or need help? Just send us a message — we're happy to assist you anytime.";
+      const typewriterElement = document.getElementById('typewriter-text');
+      let index = 0;
+      
+      function typeWriter() {
+        if (index < text.length) {
+          typewriterElement.textContent += text.charAt(index);
+          index++;
+          setTimeout(typeWriter, 50); // Adjust typing speed here (milliseconds)
+        } else {
+          // Remove cursor when typing is complete
+          typewriterElement.style.borderRight = 'none';
+        }
+      }
+      
+      // Start the typewriter effect
+      typeWriter();
+    });
+  </script>
 </body>
 </html>

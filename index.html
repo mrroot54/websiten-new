@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Portal</title>
+  <title>Job Portal - Xitamin Naukri</title>
   <!-- ✅ Lottie Player CDN -->
   <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -404,10 +404,10 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #fff;
       color: #222;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     /* Container padding utility */
     .container {
@@ -487,7 +487,7 @@
     }
     
     .hero-content h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       margin-bottom: 15px;
       animation: pulse 2s infinite;
     }
@@ -917,11 +917,28 @@
       text-align: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 40px 20px;
     }
     .featured-jobs h2 {
       font-size: 2.5rem;
       margin-bottom: 0.3rem;
+      color: #333;
+      position: relative;
+      display: inline-block;
     }
+    
+    .featured-jobs h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #ff3d3d, #ff6b6b);
+      border-radius: 2px;
+    }
+    
     .featured-jobs p {
       font-size: 1.1rem;
       color: #777;
@@ -947,13 +964,14 @@
       cursor: pointer;
       text-decoration: none;
       color: inherit;
-      -webkit-transition: box-shadow 0.3s ease;
-      -moz-transition: box-shadow 0.3s ease;
-      -o-transition: box-shadow 0.3s ease;
-      transition: box-shadow 0.3s ease;
+      -webkit-transition: box-shadow 0.3s ease, transform 0.3s ease;
+      -moz-transition: box-shadow 0.3s ease, transform 0.3s ease;
+      -o-transition: box-shadow 0.3s ease, transform 0.3s ease;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
     .job-card:hover {
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
     }
     .job-card img {
       width: 70px;
@@ -967,6 +985,7 @@
     .job-title {
       font-weight: bold;
       margin-bottom: 0.5rem;
+      color: #333;
     }
     .tags {
       display: flex;
@@ -985,7 +1004,7 @@
     }
     .see-more-btn {
       display: inline-block;
-      background-color: #ff0303;
+      background-color: #ff3d3d;
       color: #fff;
       padding: 0.75rem 1.5rem;
       text-decoration: none;
@@ -996,7 +1015,8 @@
       transition: background 0.3s ease;
     }
     .see-more-btn:hover {
-      background-color: #333;
+      background-color: #e60000;
+      transform: translateY(-2px);
     }
     /* Responsive text scaling */
     @media (max-width: 768px) {
@@ -1374,7 +1394,7 @@
     .xr-hero {
       position: relative;
       margin-top: 40px;
-      padding: 20px 15px;
+      padding: 40px 15px;
       min-height: 280px;
       width: 100%;
       background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e2a38);
@@ -1537,7 +1557,23 @@
       text-align: center;
       margin-bottom: 10px;
       font-size: 28px;
+      color: #333;
+      position: relative;
+      display: inline-block;
     }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #ff3d3d, #ff6b6b);
+      border-radius: 2px;
+    }
+    
     .job-slider-container p {
       text-align: left;
       margin-bottom: 30px;
@@ -1565,7 +1601,13 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease;
     }
+    
+    .job-news-card:hover {
+      transform: translateY(-5px);
+    }
+    
     @media (min-width: 600px) {
       .job-news-card {
         min-width: 50%;
@@ -1699,7 +1741,7 @@
     /* Contact Us */
     @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
     body {
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     .contact_us_8 {
       width: 100%;
@@ -1773,7 +1815,7 @@
     }
     .submit-btn {
       width: 100%;
-      background-color: red;
+      background-color: #ff3d3d;
       color: white;
       font-size: 18px;
       font-weight: bold;
@@ -1787,7 +1829,7 @@
       transition: background 0.3s;
     }
     .submit-btn:hover {
-      background-color: darkred;
+      background-color: #e60000;
     }
     .checkbox-group {
       display: flex;
@@ -2175,7 +2217,7 @@
     
     /* Job Listings Section Styles */
     .job-listings-section {
-      padding: 40px 20px;
+      padding: 60px 20px;
       background-color: #f9f9f9;
     }
     
@@ -2186,40 +2228,47 @@
     
     .job-listings-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
     
     .job-listings-header h2 {
-      font-size: 28px;
+      font-size: 32px;
       color: #333;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     
     .job-listings-header p {
       font-size: 16px;
       color: #666;
+      max-width: 700px;
+      margin: 0 auto;
     }
     
     .job-list {
       max-width: 900px;
       margin: auto;
       background: #fff;
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
     
     .job {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 20px;
+      padding: 20px;
       border-bottom: 1px solid #eee;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+    }
+    
+    .job:last-child {
+      border-bottom: none;
     }
     
     .job:hover {
       background: #f7faff;
+      transform: translateX(5px);
     }
     
     .job-left {
@@ -2230,8 +2279,8 @@
     }
     
     .logo {
-      width: 55px;
-      height: 55px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       color: #fff;
       display: flex;
@@ -2240,6 +2289,7 @@
       font-size: 18px;
       font-weight: bold;
       text-transform: uppercase;
+      flex-shrink: 0;
     }
     
     /* Unique colors */
@@ -2254,8 +2304,9 @@
     
     .job-info h4 {
       margin: 0;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
+      color: #333;
     }
     
     .details {
@@ -2263,9 +2314,9 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 15px;
-      font-size: 13px;
-      color: #444;
-      margin-top: 3px;
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
     }
     
     .details span {
@@ -2275,50 +2326,133 @@
     }
     
     .details i {
-      color: #555;
+      color: #ff3d3d;
     }
     
     .apply-btn {
-      padding: 7px 15px;
-      background: #4CAF50;
+      padding: 10px 20px;
+      background: #ff3d3d;
       color: #fff;
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 600;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
     }
     
     .apply-btn:hover { 
-      background: #45a049; 
+      background: #e60000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 61, 61, 0.2);
     }
     
     /* More Jobs button */
     .more-btn {
       display: block;
       width: 200px;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background: #e53935;
+      margin: 30px auto 0;
+      padding: 12px 20px;
+      background: #ff3d3d;
       color: #fff;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       text-align: center;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
     
     .more-btn:hover {
-      background: #c62828;
+      background: #e60000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 61, 61, 0.2);
     }
     
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
       .job {
         flex-direction: column;
         align-items: flex-start;
+        padding: 15px;
       }
+      
+      .job-left {
+        width: 100%;
+      }
+      
+      .apply-btn {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+    
+    /* Section spacing improvements */
+    .section-spacing {
+      padding: 80px 0;
+    }
+    
+    @media (max-width: 768px) {
+      .section-spacing {
+        padding: 60px 0;
+      }
+    }
+    
+    /* Improved button styles consistency */
+    .btn-primary {
+      background-color: #ff3d3d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    .btn-primary:hover {
+      background-color: #e60000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 61, 61, 0.2);
+    }
+    
+    /* Improved heading styles */
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #ff3d3d, #ff6b6b);
+      border-radius: 2px;
+    }
+    
+    /* Improved card styles */
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     }
   </style>
 </head>
@@ -2461,14 +2595,14 @@
       <div class="slide"><img src="company-logo/9.png" alt=""></div>
     </div>
   </div>
-  <br><br><br><br>
+  
   <!--------------------------------- Featured Tab  -------------------------------------->
-  <section class="featured-jobs" id="jobs">
-    <h2>Featured Jobs</h2>
-    <p style="text-align: center;">Know your worth and find the job that qualifies your life</p>
+  <section class="featured-jobs section-spacing" id="jobs">
+    <h2 class="section-title">Featured Jobs</h2>
+    <p>Know your worth and find the job that qualifies your life</p>
     <div class="job-grid">
       <!-- Job Card 1 - Graphic Designer -->
-      <a href="#" class="job-card">
+      <a href="#" class="job-card card">
         <img src="img/job/graphic-designer.png" alt="Company Logo" />
         <div class="job-info">
           <div class="job-title">Graphic Designer </div>
@@ -2478,7 +2612,7 @@
         </div>
       </a>
       <!-- Job Card 2 - Accountant -->
-      <a href="#" class="job-card">
+      <a href="#" class="job-card card">
         <img src="img/job/account.png" alt="Company Logo" />
         <div class="job-info">
           <div class="job-title">Accountant</div>
@@ -2488,7 +2622,7 @@
         </div>
       </a>
       <!-- Job Card 3 - Tax Operator -->
-      <a href="#" class="job-card">
+      <a href="#" class="job-card card">
         <img src="img/job/taxes.png" alt="Company Logo" />
         <div class="job-info">
           <div class="job-title">Tax Operator</div>
@@ -2498,7 +2632,7 @@
         </div>
       </a>
       <!-- Job Card 4 - Security Guard -->
-      <a href="#" class="job-card">
+      <a href="#" class="job-card card">
         <img src="img/job/guard.png" alt="Company Logo" />
         <div class="job-info">
           <div class="job-title">Security Guard</div>
@@ -2509,10 +2643,10 @@
       </a>
     </div>
     <!-- See More Button -->
-    <a class="see-more-btn" href="view-jobs/JobPortal.php" target="_blank">See More Job</a>
+    <a class="btn-primary see-more-btn" href="view-jobs/JobPortal.php" target="_blank">See More Job</a>
   </section>
-  <!-- ✅ Final Wrapper with full background -->
   
+  <!-- ✅ Final Wrapper with full background -->
   <div class="testimonial-wrapper">
     <div class="testimonial-container">
       
@@ -2631,15 +2765,15 @@
   </div>
   
   <!------------------------------ Heading Line  ----------------------------------- -->
-  <div style="text-align: center;">
-    <h2 class="featured-jobs" id="services">TOP CAREER PACKAGES</h2>
+  <div class="section-spacing" style="text-align: center;">
+    <h2 class="section-title" id="services">TOP CAREER PACKAGES</h2>
   </div>
   
   <!-- Job Listings Section -->
   <div class="job-listings-section">
     <div class="job-listings-container">
       <div class="job-listings-header">
-        <h2>43,167 Job Listed</h2>
+        <h2 class="section-title">43,167 Job Listed</h2>
         <p>Explore thousands of job opportunities across various industries</p>
       </div>
       
@@ -2656,7 +2790,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2670,7 +2804,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2684,7 +2818,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2698,7 +2832,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2712,7 +2846,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2726,7 +2860,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2740,7 +2874,7 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
         <div class="job">
           <div class="job-left">
@@ -2754,11 +2888,11 @@
               </div>
             </div>
           </div>
-          <button class="apply-btn">Apply Now</button>
+          <button class="apply-btn btn-primary">Apply Now</button>
         </div>
       </div>
       
-      <button class="more-btn">More Jobs</button>
+      <button class="more-btn btn-primary">More Jobs</button>
     </div>
   </div>
   
@@ -2785,73 +2919,73 @@
     <form action="upload_resume.php" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
       <input type="file" name="resume" accept=".pdf,.doc,.docx" required style="padding: 8px; font-size: 16px;">
       <br><br>
-      <button type="submit" class="xr-upload-btn">UPLOAD YOUR CV</button>
+      <button type="submit" class="xr-upload-btn btn-primary">UPLOAD YOUR CV</button>
     </form>
   </div>
-  <br><br>
   
   <!-----------------------------  News Section ------------------------------------------------------------- -->
-  <h2 id="blog">Latest blog by xitaminnaukri.com </h2>
-  <div class="job-slider-container">
-    <div class="job-slider-track" id="sliderTrack">
-      <!-- CARD 1 -->
-      <div class="job-news-card">
-        <img src="img/news/Graphic.jpg" class="job-card-img" alt="Graphic Designer">
-        <div class="job-card-content">
-          <h3 class="job-card-title">Graphic Designer</h3>
-          <p class="job-card-desc">Join our creative design team at Xitamin. Work with Adobe, Figma & more.</p>
-          <a href="#" class="job-read-btn">Read More</a>
-        </div>
-      </div>
-      <!-- CARD 2 -->
-      <div class="job-news-card">
-        <img src="img/news/Accountant.jpg" class="job-card-img" alt="Accountant">
-        <div class="job-card-content">
-          <h3 class="job-card-title">Accountant</h3>
-          <p class="job-card-desc">We're hiring skilled accountants with Tally, GST, and Excel knowledge.</p>
-          <a href="#" class="job-read-btn">Read More</a>
-        </div>
-      </div>
-      <!-- CARD 3 -->
-      <div class="job-news-card">
-        <img src="img/job/taxes.png" class="job-card-img" alt="Tax Operator">
-        <div class="job-card-content">
-          <h3 class="job-card-title">Tax Operator</h3>
-          <p class="job-card-desc">Apply for tax filing & return jobs at Xitamin. TDS & ITR knowledge required.</p>
-          <a href="#" class="job-read-btn">Read More</a>
-        </div>
-      </div>
-      <!-- CARD 4 -->
-      <div class="job-news-card">
-        <img src="img/news/Security .jpg" class="job-card-img" alt="Security Guard">
-        <div class="job-card-content">
-          <h3 class="job-card-title">Security Guard</h3>
-          <p class="job-card-desc">We're hiring security guards for residential and commercial buildings.</p>
-          <a href="#" class="job-read-btn">Read More</a>
-        </div>
-      </div>
-      <!-- CARD 5 -->
-      <div class="job-news-card">
-        <img src="img/news/Office.jpg" class="job-card-img" alt="Office Assistant">
-        <div class="job-card-content">
-          <h3 class="job-card-title">Office Assistant</h3>
-          <p class="job-card-desc">Join our team as a full-time office assistant. Basic computer skills needed.</p>
-          <a href="#" class="job-read-btn">Read More</a>
+  <div class="section-spacing">
+    <div class="container">
+      <h2 class="section-title" id="blog">Latest blog by xitaminnaukri.com</h2>
+      <div class="job-slider-container">
+        <div class="job-slider-track" id="sliderTrack">
+          <!-- CARD 1 -->
+          <div class="job-news-card card">
+            <img src="img/news/Graphic.jpg" class="job-card-img" alt="Graphic Designer">
+            <div class="job-card-content">
+              <h3 class="job-card-title">Graphic Designer</h3>
+              <p class="job-card-desc">Join our creative design team at Xitamin. Work with Adobe, Figma & more.</p>
+              <a href="#" class="job-read-btn btn-primary">Read More</a>
+            </div>
+          </div>
+          <!-- CARD 2 -->
+          <div class="job-news-card card">
+            <img src="img/news/Accountant.jpg" class="job-card-img" alt="Accountant">
+            <div class="job-card-content">
+              <h3 class="job-card-title">Accountant</h3>
+              <p class="job-card-desc">We're hiring skilled accountants with Tally, GST, and Excel knowledge.</p>
+              <a href="#" class="job-read-btn btn-primary">Read More</a>
+            </div>
+          </div>
+          <!-- CARD 3 -->
+          <div class="job-news-card card">
+            <img src="img/job/taxes.png" class="job-card-img" alt="Tax Operator">
+            <div class="job-card-content">
+              <h3 class="job-card-title">Tax Operator</h3>
+              <p class="job-card-desc">Apply for tax filing & return jobs at Xitamin. TDS & ITR knowledge required.</p>
+              <a href="#" class="job-read-btn btn-primary">Read More</a>
+            </div>
+          </div>
+          <!-- CARD 4 -->
+          <div class="job-news-card card">
+            <img src="img/news/Security .jpg" class="job-card-img" alt="Security Guard">
+            <div class="job-card-content">
+              <h3 class="job-card-title">Security Guard</h3>
+              <p class="job-card-desc">We're hiring security guards for residential and commercial buildings.</p>
+              <a href="#" class="job-read-btn btn-primary">Read More</a>
+            </div>
+          </div>
+          <!-- CARD 5 -->
+          <div class="job-news-card card">
+            <img src="img/news/Office.jpg" class="job-card-img" alt="Office Assistant">
+            <div class="job-card-content">
+              <h3 class="job-card-title">Office Assistant</h3>
+              <p class="job-card-desc">Join our team as a full-time office assistant. Basic computer skills needed.</p>
+              <a href="#" class="job-read-btn btn-primary">Read More</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <br><br><br><br>
-  <h2> Recruiting Platform for Job Providers </h2>
-  <br>
-  <!---------------------------------------- Recruiting ------------------------------------------------->
   
-  <section class="recruit-sec-wrapper">
+  <!---------------------------------------- Recruiting ------------------------------------------------->
+  <section class="recruit-sec-wrapper section-spacing">
     <!-- TEXT -->
     <div class="recruit-sec-text">
       <h1 class="recruit-sec-title">Recruiting?</h1>
       <h4 class="recruit-sec-desc">Advertise your jobs to millions of monthly users and search 15.8 million CVs in our database.</h4>
-      <a href="recruit/index.html" class="recruit-sec-button">Start Recruiting Now</a>
+      <a href="recruit/index.html" class="recruit-sec-button btn-primary">Start Recruiting Now</a>
     </div>
     <!-- ANIMATED HIRING ILLUSTRATION -->
     <div class="recruit-sec-img">
@@ -2863,45 +2997,49 @@
       </dotlottie-wc>
     </div>
   </section>
-  <br><br><br>
-  <!------------------------------------ Contact US --------------------------------------------------->
-  <h2 id="contact">📞 Contact Us</h2>
-  <p style="text-align: center;">We're here to help with your questions, feedback, or ideas.</p>
   
-  <div class="contact_us_8">
-    <form class="form-box" action="contact.php" method="post">
+  <!------------------------------------ Contact US --------------------------------------------------->
+  <div class="section-spacing">
+    <div class="container">
+      <h2 class="section-title" id="contact">📞 Contact Us</h2>
+      <p style="text-align: center;">We're here to help with your questions, feedback, or ideas.</p>
       
-      <!-- Left Form Section -->
-      <div class="form-left">
-        <input type="text" name="FirstName" placeholder="First Name" required>
-        <input type="text" name="LastName" placeholder="Last Name" required>
-        <input type="email" name="Email" placeholder="Email" required>
-        <input type="tel" name="PhoneNumber" placeholder="Phone Number" required>
-        <textarea name="Message" placeholder="What's on your mind?" required></textarea>
-        
-        <div class="checkbox-group">
-          <input type="checkbox" id="agree" name="agree" value="1" required>
-          <label class="checkbox-text" for="agree">I agree to the privacy policy.</label>
-        </div>
-        
-        <button type="submit" class="submit-btn">Submit</button>
-      </div>
-      <!-- Right Info Section -->
-      <div class="form-right">
-        <p class="text-blk contactus-head">Contact Us</p>
-        <p class="text-blk contactus-subhead">
-          <span id="typewriter-text"></span>
-        </p>
-        
-        <div class="social-media-links">
+      <div class="contact_us_8">
+        <form class="form-box" action="contact.php" method="post">
           
-          <a href="https://www.facebook.com/share/1DXLyPm2o4/"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png" alt="Facebook"></a>
-          <a href="https://www.instagram.com/xitamin.naukri?igsh=bmMwMTVjdHNuNmlt"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png" alt="Instagram"></a>
-        </div>
+          <!-- Left Form Section -->
+          <div class="form-left">
+            <input type="text" name="FirstName" placeholder="First Name" required>
+            <input type="text" name="LastName" placeholder="Last Name" required>
+            <input type="email" name="Email" placeholder="Email" required>
+            <input type="tel" name="PhoneNumber" placeholder="Phone Number" required>
+            <textarea name="Message" placeholder="What's on your mind?" required></textarea>
+            
+            <div class="checkbox-group">
+              <input type="checkbox" id="agree" name="agree" value="1" required>
+              <label class="checkbox-text" for="agree">I agree to the privacy policy.</label>
+            </div>
+            
+            <button type="submit" class="submit-btn btn-primary">Submit</button>
+          </div>
+          <!-- Right Info Section -->
+          <div class="form-right">
+            <p class="text-blk contactus-head">Contact Us</p>
+            <p class="text-blk contactus-subhead">
+              <span id="typewriter-text"></span>
+            </p>
+            
+            <div class="social-media-links">
+              
+              <a href="https://www.facebook.com/share/1DXLyPm2o4/"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png" alt="Facebook"></a>
+              <a href="https://www.instagram.com/xitamin.naukri?igsh=bmMwMTVjdHNuNmlt"><img src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png" alt="Instagram"></a>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
-  <br><br><br>
+  
   <!------------------------------Footer Starting  Here  ------------------>
   <!-- ✅ Footer Starts Here -->
   <footer class="modern-footer">
@@ -2969,6 +3107,7 @@
       </div>
     </div>
   </footer>
+  
   <!-- Contact Form Success Modal -->
   <div id="successModal" class="modal">
     <div class="modal-content">
@@ -2978,6 +3117,7 @@
       <button class="modal-close" onclick="closeModal()">OK</button>
     </div>
   </div>
+  
   <!-- Contact Form Error Modal -->
   <div id="errorModal" class="modal">
     <div class="modal-content">
@@ -2987,6 +3127,7 @@
       <button class="modal-close error-close" onclick="closeErrorModal()">OK</button>
     </div>
   </div>
+  
   <!-- Resume Upload Success Modal -->
   <div id="resumeSuccessModal" class="modal">
     <div class="modal-content">
@@ -2996,6 +3137,7 @@
       <button class="modal-close" onclick="closeResumeSuccessModal()">OK</button>
     </div>
   </div>
+  
   <!-- Resume Upload Error Modal -->
   <div id="resumeErrorModal" class="modal">
     <div class="modal-content">
@@ -3005,6 +3147,7 @@
       <button class="modal-close error-close" onclick="closeResumeErrorModal()">OK</button>
     </div>
   </div>
+  
   <script>
     const track = document.getElementById("sliderTrack");
     let index = 0;
@@ -3029,6 +3172,7 @@
       track.style.transform = `translateX(0px)`;
     });
   </script>
+  
   <!-- 🔁 Testimonial Slider JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -3130,6 +3274,7 @@
       testimonialInterval = setInterval(nextSlide, 5000);
     });
   </script>
+  
   <script>
     function uploadCV() {
       alert("Upload functionality is not implemented yet.");

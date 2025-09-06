@@ -2576,7 +2576,7 @@
     
     .apply-btn {
       padding: 10px 20px;
-      background: #ff3d3d;
+      background: black; /* Changed from #ff3d3d to black */
       color: #fff;
       font-size: 14px;
       font-weight: 600;
@@ -2588,9 +2588,9 @@
     }
     
     .apply-btn:hover { 
-      background: #e60000;
+      background: #333; /* Changed from #e60000 to a dark gray */
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(255, 61, 61, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Changed shadow color to black */
     }
     
     /* More Jobs button */
@@ -3174,11 +3174,6 @@
     </div>
   </div>
   
-  <!------------------------------ Heading Line  ----------------------------------- -->
-  <div class="section-spacing" style="text-align: center;">
-    <h2 class="section-title" id="services">TOP CAREER PACKAGES</h2>
-  </div>
-  
   <!-- Job Listings Section -->
   <div class="job-listings-section">
     <div class="job-listings-container">
@@ -3326,6 +3321,7 @@
     </svg>
     <!-- Text and file upload form -->
     <h1>Stand Out with a Resume That<br>Speaks for You!</h1>
+    <h2 style="font-size: 22px; margin-bottom: 20px; color: #fff;">Upload Your CV</h2>
     <form action="upload_resume.php" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
       <input type="file" name="resume" accept=".pdf,.doc,.docx" required style="padding: 8px; font-size: 16px;">
       <br><br>
